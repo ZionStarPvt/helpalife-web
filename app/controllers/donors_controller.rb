@@ -1,4 +1,4 @@
 class DonorsController < ApplicationController
-  def index
+  def donor
   end
 end
