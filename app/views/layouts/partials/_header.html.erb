@@ -28,7 +28,7 @@
     <div class="collapse navbar-collapse d-none d-lg-flex justify-content-center" id="navbarNav">
       <ul class="navbar-nav gap-4">
         <li class="nav-item">
-          <a href="home" class="nav-link fw-semibold">Home</a>
+          <a href="<%= home_path(anchor: 'Home') %>" class="dropdown-item active fw-semibold py-2">Home</a>
         </li>
         <li class="nav-item">
           <a href="About.html" class="nav-link fw-semibold">About us</a>
@@ -38,7 +38,7 @@
             Emergency
           </a>
           <ul class="dropdown-menu shadow-sm rounded-3 border border-light">
-            <li><a class="dropdown-item active fw-semibold py-2" href="donors">Find Donors</a></li>
+            <a href="<%= donors_path(anchor: 'find-donors') %>" class="dropdown-item active fw-semibold py-2">Find Donors</a>
             <li><a class="dropdown-item fw-semibold py-2" href="Donate Now.html">Donate Now</a></li>
           </ul>
         </li>
