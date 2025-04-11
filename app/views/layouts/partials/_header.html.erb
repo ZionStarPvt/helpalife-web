@@ -1,47 +1,125 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-  <div class="container-fluid">
-    <a href="#" class="navbar-brand d-flex align-items-center text-danger fw-bold ms-5">
-      <%= image_tag "logo.png", class: "navbar-brand", style: "height:55px;" %>
+<!--Navbar-->
+<nav class="navbar navbar-expand-lg fixed-top bg-white py-3">
+  <div class="container d-flex justify-content-between align-items-center">
+    <!-- Logo -->
+    <a href="#" class="navbar-brand">
+      <%= image_tag "helpalifelogo.png", class: "navbar-brand", style: "height:55px;" %>
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <!-- Profile Icon + Toggler for Mobile -->
+    <div class="d-lg-none d-flex align-items-center gap-3">
+      <!-- Profile Icon (SVG) -->
+      <a href="profile.html" class="text-decoration-none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+             class="bi bi-person-circle text-secondary" viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+          <path fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+        </svg>
+      </a>
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav m-auto">
-        <li class="nav-item me-5">
-          <a href="home" class="nav-link">Home</a>
-        </li>
-        <li class="nav-item me-5">
-          <a href="#" class="nav-link">About</a>
-        </li>
+      <!-- Toggler Button -->
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
 
-        <li class="nav-item dropdown me-5">
-          <a class="nav-link dropdown-toggle" href="#" id="emergencyDropdown" role="button" data-bs-toggle="dropdown">
-            Emergency
-          </a>
-          <ul class="dropdown-menu">
-            <li><a href= "donors" target="_blank" class="nav-link dropdown-item">Find Donors</a></li>
-            <li><a href="#" class="nav-link dropdown-item">Donate Now</a></li>
-          </ul>
-        </li>
-
-        <li class="nav-item me-5">
-          <a href="#" class="nav-link">Donations</a>
+    <!-- Desktop Navbar -->
+    <div class="collapse navbar-collapse d-none d-lg-flex justify-content-center" id="navbarNav">
+      <ul class="navbar-nav gap-4">
+        <li class="nav-item">
+          <a href="<%= home_path(anchor: 'Home') %>" class="dropdown-item active fw-semibold py-2">Home</a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link">Register</a>
+          <a href="About.html" class="nav-link fw-semibold">About us</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle fw-semibold" id="emergencyDropdown" role="button" data-bs-toggle="dropdown">
+            Emergency
+          </a>
+          <ul class="dropdown-menu shadow-sm rounded-3 border border-light">
+            <a href="<%= donors_path(anchor: 'find-donors') %>" class="dropdown-item active fw-semibold py-2">Find Donors</a>
+            <li><a class="dropdown-item fw-semibold py-2" href="Donate Now.html">Donate Now</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="Donations.html" class="nav-link fw-semibold">Donations</a>
+        </li>
+        <li class="nav-item">
+          <a href="Signup.html" class="nav-link fw-semibold">Register</a>
         </li>
       </ul>
+    </div>
 
-      <div class="d-flex align-items-center ms-5 p-3">
-        <a href="#" class="nav-link text-danger me-4">Login</a>
-        <a href="#" class="btn btn-danger fw-bold rounded-pill px-4">Sign Up</a>
-      </div>
-      <a href="#" class="navbar-brand d-flex align-items-center text-danger fw-bold ms-2">
-        <%= image_tag "logo1.png", class: "navbar-brand", height: 40 %>
+    <!-- Desktop Buttons -->
+    <div class="navbar-buttons d-none d-lg-flex gap-3">
+      <a href="#">
+        <button type="button" class="btn btn-outline-danger px-3 py-2 fw-semibold">
+          Login
+        </button>
+      </a>
+      <a href="Signup.html">
+        <button type="button" class="btn btn-danger px-3 py-2 fw-semibold">
+          Sign up
+        </button>
+      </a>
+      <a href="profile.html">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle mt-2 text-secondary" viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+        </svg>
       </a>
     </div>
   </div>
+
+  <!-- Mobile Offcanvas Menu -->
+  <div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="offcanvasNavbar">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Menu</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column justify-content-between align-items-start">
+      <ul class="navbar-nav text-start">
+        <li class="nav-item">
+          <a href="Home.html" class="nav-link active fw-semibold mb-4">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="About.html" class="nav-link fw-semibold mb-4">About us</a>
+        </li>
+        <li class="nav-item dropdown w-100">
+          <a href="#" class="nav-link dropdown-toggle fw-semibold mb-4 w-100 text-start" id="emergencyDropdownMobile" role="button" data-bs-toggle="dropdown">
+            Emergency
+          </a>
+          <ul class="dropdown-menu shadow-sm rounded-3 border border-light w-100" aria-labelledby="emergencyDropdownMobile">
+            <li><a class="dropdown-item active fw-semibold py-2" href="Find Donors.html">Find Donors</a></li>
+            <li><a class="dropdown-item fw-semibold py-2" href="Donate Now.html">Donate Now</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="Donations.html" class="nav-link fw-semibold mb-4">Donations</a>
+        </li>
+        <li class="nav-item">
+          <a href="Signup.html" class="nav-link fw-semibold mb-4">Register</a>
+        </li>
+      </ul>
+      <!-- Mobile Login/Signup Buttons -->
+      <div class="offcanvas-footer p-3 w-100">
+        <div class="navbar-buttons d-flex flex-column gap-3">
+          <a href="#">
+            <button type="button" class="btn btn-outline-danger px-3 py-2 fw-semibold w-100">
+              Login
+            </button>
+          </a>
+          <a href="Signup.html">
+            <button type="button" class="btn btn-danger px-3 py-2 fw-semibold w-100">
+              Sign up
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </nav>
+
+<!--Navbar-->

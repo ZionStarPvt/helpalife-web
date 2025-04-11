@@ -18,15 +18,18 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <head>
-      <%= stylesheet_link_tag "application"%>
-      <%#= javascript_include_tag "application"%>
+    <%= stylesheet_link_tag 'application' %>
       <%= javascript_importmap_tags %>
-    </head>
+      <%= javascript_include_tag "bootstrap.bundle.min", "data-turbo-track": "reload", defer: true %>
+    <%= javascript_include_tag "location_search" %>
 
-  <body>
-  <!-- Include the Header -->
-  <%= render 'layouts/partials/header' %>
-    <%= yield %>
-  </body>
+  </head>
+<body>
+
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&callback=initMap&libraries=places&region=all"></script>
+<!-- Include the Header -->
+<%= render 'layouts/partials/header' %>
+<%= yield %>
+</body>
 </html>
