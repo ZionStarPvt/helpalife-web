@@ -65,5 +65,8 @@ end
 gem "bootstrap", "~> 5.3"
 gem 'cssbundling-rails'
 gem 'dartsass-rails'
+gem "devise", "~> 4.9.0"
+gem 'pg'
+gem 'geocoder'
 
 
