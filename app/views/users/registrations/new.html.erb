@@ -1,76 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-<body>
-
-<!-- Background Red (Hidden on Mobile) -->
-<div class="container-fluid d-none d-md-flex flex-column justify-content-center align-items-center bg-danger text-white position-relative" style="min-height: 35vh;">
+<!-- Background Section (Only visible on md and above) -->
+<div class="container-fluid bg-danger text-white d-none d-md-flex flex-column justify-content-center align-items-center" style="min-height: 35vh;">
   <div class="text-center w-100">
-    <h3>Register as a Donor</h3>
+    <h3>Register as a donor</h3>
     <p>Join us in making a difference by becoming a donor.</p>
   </div>
 </div>
 
-<!-- Centered Form Over Background -->
+<!-- Unified Form Section -->
 <div class="container position-relative">
+  <!-- Position absolute card on md and up, normal position on small screens -->
+  <div class="card p-4 shadow w-100 mx-auto" style="max-width: 650px; margin-top: -100px;">
+    <!-- Visible only on small screens -->
+    <div class="d-md-none text-center mb-3">
+      <h3>Register as a donor</h3>
+      <p>Join us in making a difference by becoming a donor.</p>
+    </div>
 
-  <!-- Card Wrapper (Over Background, Hidden on Mobile) -->
-  <div class="card p-4 shadow w-100 d-none d-md-block position-absolute top-100 start-50 translate-middle" style="max-width: 800px; margin-top: 170px;">
-    <p class="text-start mb-4 fw-bold">Register as a Donor</p>
-
+    <p class="text-start mb-4 fw-bold">Register as a donor</p>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :post }) do |f| %>
       <div class="mb-3 row">
-        <label for="name" class="col-3 col-form-label fw-semibold">Name</label>
+        <label class="col-3 col-form-label fw-semibold">Name</label>
         <div class="col-9">
-          <%= f.text_field :name, class: "form-control", required:"true", placeholder: "Full name" %>
+          <%= f.text_field :name, class: "form-control", required: true, placeholder: "Full name" %>
         </div>
       </div>
-      <div class="mb-3 mt-4 row">
-        <label for="email" class="col-3 col-form-label fw-semibold">Email</label>
-        <div class="col-9">
-          <%= f.text_field :email, class: "form-control", required: true, placeholder: "Email address" %>
-        </div>
-      </div>
-      <div class="mb-3 mt-4 row">
-        <label for="password" class="col-3 col-form-label fw-semibold">Password</label>
-        <div class="col-9" >
-          <%= f.password_field :password, class: "form-control", required: true, placeholder: "Password" ,maxlength:"20",minlength:"6" ,id:"password_Input" %>
-          <div class="invalid-feedback" id="passwordLengthFeedback">Passwords should have atleast 6 characters.</div>
-        </div>
-      </div>
-      <div class="mb-3 mt-4 row">
-        <label for="password_confirmation" class="col-3 col-form-label fw-semibold">Confirm Password</label>
-        <div class="col-9">
-          <%= f.password_field :password_confirmation, class: "form-control", required: true, placeholder: "Confirm password", id: "password_confirmationinput" %>
-          <div class="invalid-feedback" id="passwordConfirmationFeedback">Passwords do not match.</div>
-        </div>
-      </div>
-      <div class="mb-3 mt-4 row">
-        <label for="phone" class="col-3 col-form-label fw-semibold">Phone Number</label>
-        <div class="col-10 col-lg-9">
-          <%= f.text_field :phone, class: "form-control col-auto", style: 'width: 168%;', placeholder: "Enter your phone number", required: true, type: "tel", id: "phone", onkeypress: "return isNumberKey(event)" %>
-        </div>
-      </div>
-      <div class="mb-3 mt-4 row">
-        <label for="bloodGroup" class="col-3 col-form-label fw-semibold">Blood Group</label>
-        <div class="col-9">
 
-          <%= f.select( :blood_group,
-                        ["A1+", "A1-", "A2+", "A2-", "B+", "B-", "A1B+", "A1B-", "A2B+", "A2B-", "AB+", "AB-", "O+", "O-", "A+", "A-", "hh"],
-                        { prompt: "Blood Group" },
-                        { class: "form-select", required: true }) %>
+      <div class="mb-3 row">
+        <label class="col-md-3 col-form-label fw-semibold">Email</label>
+        <div class="col-md-9">
+          <%= f.email_field :email, class: "form-control", required: true, placeholder: "Email address" %>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-md-3 col-form-label fw-semibold">Password</label>
+        <div class="col-md-9">
+          <%= f.password_field :password, class: "form-control", required: true, placeholder: "Password" %>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-md-3 col-form-label fw-semibold">Confirm Password</label>
+        <div class="col-md-9">
+          <%= f.password_field :password_confirmation, class: "form-control", required: true, placeholder: "Confirm Password" %>
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label class="col-md-3 col-form-label fw-semibold" for="phone">Phone Number</label>
+        <div class="col-md-9">
+          <%= f.telephone_field :phone, class: "form-control", placeholder: "Phone Number", id: "phone", onkeypress: "return isNumberKey(event);" %>
+        </div>
+      </div>
+
+
+
+      <div class="mb-3 row">
+        <label class="col-md-3 col-form-label fw-semibold">Blood Group</label>
+        <div class="col-md-9">
+          <%= f.select :blood_group, ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-", "hh"], { prompt: "Select Blood Group" }, class: "form-select" %>
         </div>
       </div>
       <form id="register-form" action="users/registrations#new" method="post">
-    <div class="mb-3 mt-4 row">
-        <label for="location" class="col-3 col-form-label fw-semibold">Location</label>
-        <div class="col-9">
+      <div class="mb-3 row">
+        <label for="location" class="col-md-3 col-form-label fw-semibold">Location</label>
+        <div class="col-md-9">
           <div class="input-group">
-            <input type="text" class="form-control" id="locationResult" placeholder="Enter or Tap Live Location">
-            <span class="input-group-text">
-                            <i><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-crosshair2" viewBox="0 0 16 16" id="crosshair-icon">
-                                <path d="M8 0a.5.5 0 0 1 .5.5v.518A7 7 0 0 1 14.982 7.5h.518a.5.5 0 0 1 0 1h-.518A7 7 0 0 1 8.5 14.982v.518a.5.5 0 0 1-1 0v-.518A7 7 0 0 1 1.018 8.5H.5a.5.5 0 0 1 0-1h.518A7 7 0 0 1 7.5 1.018V.5A.5.5 0 0 1 8 0m-.5 2.02A6 6 0 0 0 2.02 7.5h1.005A5 5 0 0 1 7.5 3.025zm1 1.005A5 5 0 0 1 12.975 7.5h1.005A6 6 0 0 0 8.5 2.02zM12.975 8.5A5 5 0 0 1 8.5 12.975v1.005a6 6 0 0 0 5.48-5.48zM7.5 12.975A5 5 0 0 1 3.025 8.5H2.02a6 6 0 0 0 5.48 5.48zM10 8a2 2 0 1 0-4 0 2 2 0 0 0 4 0"/>
-                              </svg></i> <!-- Bootstrap Location Icon -->
-                        </span>
+            <input type="text" class="form-control" id="searchInput" placeholder="Enter or tap live location">
+            <span class="input-group-text" id="get-location-btn">
+            <i class="bi bi-crosshair2 "></i>
+            </span>
           </div>
         </div>
       </div>
@@ -85,11 +84,14 @@
     <% end %>
 
   </div>
+</div>
+<style>
+    .iti {
+        width: 100% !important;
+    }
 
-      </div>
-<!-- Full Page Centered Card -->
+    .iti input {
+        width: 100% !important;
+    }
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+</style>

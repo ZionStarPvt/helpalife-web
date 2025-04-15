@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: helpalife_dev
+  database: helpalife_development
   pool: 5
   username: canvas
   password: canvas

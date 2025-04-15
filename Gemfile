@@ -61,12 +61,11 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+gem "geocoder"
+gem 'pg'
+gem "cssbundling-rails", "~> 1.4"
 
 gem "bootstrap", "~> 5.3"
-gem 'cssbundling-rails'
-gem 'dartsass-rails'
 gem "devise", "~> 4.9.0"
-gem 'pg'
-gem 'geocoder'
 
 
