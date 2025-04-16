@@ -1,16 +1,8 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :set_minimum_password_length, only: [ :new ]
-  # prepend_before_action :require_no_authentication, only: [:create ]
   skip_before_action :require_no_authentication, only: [ :create, :new ]
-
-
-  # def zero_authors_or_authenticated
-  # end
-
   def new
     self.resource = resource_class.new
-
-
   end
   def create
     build_resource(sign_up_params)
@@ -33,9 +25,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       respond_with resource
 
     end
-  end
-
-
+    end
   private
   def sign_up_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :country_code, :phone, :blood_group, :latitude, :longitude)

@@ -62,25 +62,25 @@
         </div>
       </div>
       <form id="register-form" action="users/registrations#new" method="post">
-      <div class="mb-3 row">
-        <label for="location" class="col-md-3 col-form-label fw-semibold">Location</label>
-        <div class="col-md-9">
-          <div class="input-group">
-            <input type="text" class="form-control" id="searchInput" placeholder="Enter or tap live location">
-            <span class="input-group-text" id="get-location-btn">
+        <div class="mb-3 row">
+          <label for="location" class="col-md-3 col-form-label fw-semibold">Location</label>
+          <div class="col-md-9">
+            <div class="input-group">
+              <input type="text" class="form-control" id="searchInput" placeholder="Enter or tap live location">
+              <span class="input-group-text" id="get-location">
             <i class="bi bi-crosshair2 "></i>
             </span>
+            </div>
           </div>
         </div>
-      </div>
 
         <%= f.hidden_field :latitude, id: "latitude" %>
         <%= f.hidden_field :longitude, id: "longitude" %>
         <%= f.hidden_field :country_code, id: "country_code"%>
 
 
-      <button type="submit" class="btn btn-danger w-100 mt-4">Register</button>
-    </form>
+        <button type="submit" class="btn btn-danger w-100 mt-4">Register</button>
+      </form>
     <% end %>
 
   </div>
