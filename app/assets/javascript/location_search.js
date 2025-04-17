@@ -176,3 +176,56 @@ function isNumberKey(evt) {
     if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
     return true;
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    const fields = document.querySelectorAll('.validate-me');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('password_confirmation');
+    const emailField = document.querySelector('input[type="email"]');
+
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    form.addEventListener('submit', function (event) {
+        let valid = true;
+
+        // Required field check
+        fields.forEach(field => {
+            field.classList.remove('is-valid', 'is-invalid');
+
+            // Email field: check format
+            if (field === emailField) {
+                if (field.value.trim() === '' || !isValidEmail(field.value.trim())) {
+                    field.classList.add('is-invalid');
+                    valid = false;
+                } else {
+                    field.classList.add('is-valid');
+                }
+            } else {
+                // Regular field check
+                if (field.value.trim() === '') {
+                    field.classList.add('is-invalid');
+                    valid = false;
+                } else {
+                    field.classList.add('is-valid');
+                }
+            }
+        });
+
+        // Password match check
+        if (password.value !== confirmPassword.value) {
+            password.classList.remove('is-valid');
+            confirmPassword.classList.remove('is-valid');
+            password.classList.add('is-invalid');
+            confirmPassword.classList.add('is-invalid');
+            valid = false;
+        }
+
+        if (!valid) {
+            event.preventDefault();
+        }
+    });
+});
