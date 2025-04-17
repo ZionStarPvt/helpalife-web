@@ -1,0 +1,124 @@
+<!-- Background Section (Only visible on md and above) -->
+<div class="container-fluid bg-danger text-white d-none d-md-flex flex-column justify-content-center align-items-center" style="min-height: 35vh;">
+  <div class="text-center w-100">
+    <h3>Register as a donor</h3>
+    <p>Join us in making a difference by becoming a donor.</p>
+  </div>
+</div>
+
+<!-- Unified Form Section -->
+<div class="container position-relative">
+  <div class="card p-4 shadow w-100 mx-auto" style="max-width: 650px; margin-top: -100px;">
+
+    <!-- Heading on small screens -->
+    <div class="d-md-none text-center mb-3">
+      <h3>Register as a donor</h3>
+      <p>Join us in making a difference by becoming a donor.</p>
+    </div>
+    <p class="text-start mb-4 fw-bold">Register as a donor</p>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :post, novalidate: true }) do |f| %>
+      <!-- Name -->
+      <div class="mb-3 row">
+        <label class="col-3 col-form-label fw-semibold">Name</label>
+        <div class="col-9">
+          <%= f.text_field :name, class: "form-control validate-me #{resource.errors[:name].any? ? 'is-invalid' : (resource.errors.any? ? 'is-valid' : '')}", placeholder: "Full name" %>
+          <% if resource.errors[:name].any? %>
+            <div class="invalid-feedback"><%= resource.errors[:name].first %></div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3 row">
+        <label class="col-md-3 col-form-label fw-semibold">Email</label>
+        <div class="col-md-9">
+          <%= f.email_field :email, class: "form-control validate-me #{resource.errors[:email].any? ? 'is-invalid' : (resource.errors.any? ? 'is-valid' : '')}", placeholder: "Email address" %>
+          <% if resource.errors[:email].any? %>
+            <div class="invalid-feedback"><%= resource.errors[:email].first %></div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3 row">
+        <label class="col-md-3 col-form-label fw-semibold">Password</label>
+        <div class="col-md-9">
+          <%= f.password_field :password, class: "form-control validate-me" , placeholder: "Password", id: "password" %>
+          <% if resource.errors[:password].any? %>
+            <div class="invalid-feedback"><%= resource.errors[:password].first %></div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="mb-3 row">
+        <label class="col-md-3 col-form-label fw-semibold">Confirm Password</label>
+        <div class="col-md-9">
+          <%= f.password_field :password_confirmation, class: "form-control validate-me", placeholder: "Confirm Password", id: "password_confirmation" %>
+          <% if resource.errors[:password_confirmation].any? %>
+            <div class="invalid-feedback"><%= resource.errors[:password_confirmation].first %></div>
+          <% end %>
+        </div>
+      </div>
+      <!-- Phone -->
+      <div class="mb-3 row">
+        <label class="col-md-3 col-form-label fw-semibold" for="phone">Phone Number</label>
+        <div class="col-md-9">
+          <%= f.telephone_field :phone, class: "form-control validate-me #{resource.errors[:phone].any? ? 'is-invalid' : (resource.errors.any? ? 'is-valid' : '')}", placeholder: "Phone Number", id: "phone", onkeypress: "return isNumberKey(event);" %>
+          <% if resource.errors[:phone].any? %>
+            <div class="invalid-feedback"><%= resource.errors[:phone].first %></div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Blood Group -->
+      <div class="mb-3 row">
+        <label class="col-md-3 col-form-label fw-semibold">Blood Group</label>
+        <div class="col-md-9">
+          <%= f.select :blood_group, ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-", "hh"], { prompt: "Select Blood Group" }, class: "form-select validate-me #{resource.errors[:blood_group].any? ? 'is-invalid' : (resource.errors.any? ? 'is-valid' : '')}" %>
+          <% if resource.errors[:blood_group].any? %>
+            <div class="invalid-feedback"><%= resource.errors[:blood_group].first %></div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Location Input -->
+      <div class="mb-3 row">
+        <label for="location" class="col-md-3 col-form-label fw-semibold">Location</label>
+        <div class="col-md-9">
+          <div class="input-group">
+            <input type="text"
+                   name="location"
+                   class="form-control validate-me <%= resource.errors[:location].any? ? 'is-invalid' : (resource.errors.any? ? 'is-valid' : '') %>"
+                   id="searchInput"
+                   placeholder="Enter or tap live location">
+            <span class="input-group-text" id="get-location">
+          <i class="bi bi-crosshair2"></i>
+        </span>
+          </div>
+          <% if resource.errors[:location].any? %>
+            <div class="invalid-feedback"><%= resource.errors[:location].first %></div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Hidden Fields -->
+      <%= f.hidden_field :latitude, id: "latitude" %>
+      <%= f.hidden_field :longitude, id: "longitude" %>
+      <%= f.hidden_field :country_code, id: "country_code" %>
+
+      <!-- Submit -->
+      <%= f.submit "Register", class: "btn btn-danger w-100 mt-4" %>
+    <% end %>
+  </div>
+</div>
+
+<!-- Optional Styles -->
+<style>
+    .iti {
+        width: 100% !important;
+    }
+    .iti input {
+        width: 100% !important;
+    }
+</style>

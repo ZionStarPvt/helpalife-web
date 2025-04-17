@@ -1,35 +1,36 @@
+
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= content_for(:title) || "Voluntary Blood Donors online Community" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title><%= content_for(:title) || "Voluntary Blood Donors online Community" %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag 'application' %>
-      <%= javascript_importmap_tags %>
-      <%= javascript_include_tag "bootstrap.bundle.min", "data-turbo-track": "reload", defer: true %>
-    <%= javascript_include_tag "location_search" %>
-
-  </head>
+  <%= yield :head %>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phone Number Input with Flags</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+  <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+  <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+  <link rel="apple-touch-icon" href="/icon.png">
+  <%# Includes all stylesheet files in app/assets/stylesheets %>
+  <%= stylesheet_link_tag 'application' %>
+  <%= javascript_importmap_tags %>
+  <%= javascript_include_tag "bootstrap.bundle.min", "data-turbo-track": "reload", defer: true %>
+  <%= javascript_include_tag "location_search" %>
+</head>
 <body>
 
-
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&callback=initMap&libraries=places&region=all"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <!-- Include the Header -->
 <%= render 'layouts/partials/header' %>
 <%= yield %>
+<div id="map" style="max-height: 600px; width: 1000px; margin-top: 20px;"></div>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3gsc7Jkqui0F-bXUWcRo3UaG8Rimz7YI&callback=initMap&libraries=places&region=us"></script>
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.11/index.min.js"></script>
 </body>
 </html>
