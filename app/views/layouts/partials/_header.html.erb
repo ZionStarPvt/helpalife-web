@@ -39,7 +39,7 @@
           </a>
           <ul class="dropdown-menu shadow-sm rounded-3 border border-light">
             <a href="<%= donors_path(anchor: 'find-donors') %>" class="dropdown-item fw-semibold py-2<%= ' text-danger' if current_page?(donors_path) %>">Find Donors</a>
-            <li><a class="dropdown-item fw-semibold py-2<%= ' text-danger' if request.path.include?('Donate Now') %>" href="/Donate%20Now.html">Donate Now</a></li>
+            <li><a class="dropdown-item fw-semibold py-2<%= ' text-danger' if request.path.include?('Donate Now') %>" href="#">Donate Now</a></li>
           </ul>
         </li>
         <li class="nav-item">
@@ -92,7 +92,7 @@
           </a>
           <ul class="dropdown-menu shadow-sm rounded-3 border border-light w-100" aria-labelledby="emergencyDropdownMobile">
             <li><a class="dropdown-item fw-semibold py-2<%= ' text-danger' if current_page?(donors_path) %>" href="<%= donors_path(anchor: 'find-donors') %>">Find Donors</a></li>
-            <li><a class="dropdown-item fw-semibold py-2<%= ' text-danger' if request.path.include?('Donate Now') %>" href="/Donate%20Now.html">Donate Now</a></li>
+            <li><a class="dropdown-item fw-semibold py-2<%= ' text-danger' if request.path.include?('Donate Now') %>" href="#">Donate Now</a></li>
           </ul>
         </li>
 
