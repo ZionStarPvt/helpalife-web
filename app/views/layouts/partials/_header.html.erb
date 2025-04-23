@@ -81,18 +81,18 @@
     <div class="offcanvas-body d-flex flex-column justify-content-between align-items-start">
       <ul class="navbar-nav text-start">
         <li class="nav-item">
-          <a href="<%= root_path %>" class="nav-link active fw-semibold mb-4">Home</a>
+          <a href="<%= root_path %>" class="nav-link fw-semibold mb-4<%= ' text-danger' if current_page?(root_path) %>">Home</a>
         </li>
         <li class="nav-item">
-          <a href="<%= about_path %>" class="nav-link fw-semibold mb-4">About us</a>
+          <a href="<%= about_path %>" class="nav-link fw-semibold mb-4<%= ' text-danger' if current_page?(about_path) %>">About us</a>
         </li>
         <li class="nav-item dropdown w-100">
-          <a href="#" class="nav-link dropdown-toggle fw-semibold mb-4 w-100 text-start" id="emergencyDropdownMobile" role="button" data-bs-toggle="dropdown">
+          <a href="#" class="nav-link dropdown-toggle fw-semibold mb-4 w-100 text-start<%= ' text-danger' if current_page?(donors_path) || request.path.include?('Donate Now') %>" id="emergencyDropdownMobile" role="button" data-bs-toggle="dropdown">
             Emergency
           </a>
           <ul class="dropdown-menu shadow-sm rounded-3 border border-light w-100" aria-labelledby="emergencyDropdownMobile">
-            <li><a class="dropdown-item active fw-semibold py-2" href="Find Donors.html">Find Donors</a></li>
-            <li><a class="dropdown-item fw-semibold py-2" href="Donate Now.html">Donate Now</a></li>
+            <li><a class="dropdown-item fw-semibold py-2<%= ' text-danger' if current_page?(donors_path) %>" href="<%= donors_path(anchor: 'find-donors') %>">Find Donors</a></li>
+            <li><a class="dropdown-item fw-semibold py-2<%= ' text-danger' if request.path.include?('Donate Now') %>" href="/Donate%20Now.html">Donate Now</a></li>
           </ul>
         </li>
 
@@ -100,7 +100,7 @@
           <a href="#" class="nav-link fw-semibold mb-4">Donations</a>
         </li>
         <li class="nav-item">
-          <a href=" <%= register_path %>" class="nav-link fw-semibold">Register</a>
+          <a href="<%= register_path %>" class="nav-link fw-semibold<%= ' text-danger' if current_page?(register_path) %>">Register</a>
         </li>
       </ul>
       <!-- Mobile Login/Signup Buttons -->
