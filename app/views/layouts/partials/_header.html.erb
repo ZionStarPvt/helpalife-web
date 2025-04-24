@@ -43,7 +43,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link fw-semibold">Donations</a>
+          <a href="<%= donations_path %>" class="nav-link fw-semibold<%= ' text-danger' if current_page?(donations_path) %>">Donations</a>
         </li>
         <li class="nav-item">
           <a href="<%= register_path %>" class="nav-link fw-semibold<%= ' text-danger' if current_page?(register_path) %>">Register</a>
@@ -97,7 +97,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="#" class="nav-link fw-semibold mb-4">Donations</a>
+          <a href="<%= donations_path %>" class="nav-link fw-semibold mb-4<%= ' text-danger' if current_page?(donations_path) %>">Donations</a>
         </li>
         <li class="nav-item">
           <a href="<%= register_path %>" class="nav-link fw-semibold<%= ' text-danger' if current_page?(register_path) %>">Register</a>
