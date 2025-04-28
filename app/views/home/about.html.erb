@@ -1,0 +1,138 @@
+
+    <!-- Profile Icon + Toggler for Mobile -->
+    <div class="d-lg-none d-flex align-items-center gap-3">
+      <!-- Profile Icon (SVG) -->
+      <a href="profile.html" class="text-decoration-none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+             class="bi bi-person-circle text-secondary" viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+          <path fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+        </svg>
+      </a>
+
+      <!-- Toggler Button -->
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+
+    <!-- Desktop Buttons -->
+    <div class="navbar-buttons d-none d-lg-flex gap-3">
+      <a href="#">
+        <button type="button" class="btn btn-outline-danger px-3 py-2 fw-semibold">
+          Login
+        </button>
+      </a>
+      <a href="Signup.html">
+        <button type="button" class="btn btn-danger px-3 py-2 fw-semibold">
+          Sign up
+        </button>
+      </a>
+      <a href="profile.html">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle mt-2 text-secondary" viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Mobile Offcanvas Menu -->
+  <div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="offcanvasNavbar">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Menu</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column justify-content-between align-items-start">
+      <ul class="navbar-nav text-start">
+        <li class="nav-item">
+          <a href="Home.html" class="nav-link active fw-semibold mb-4">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="About.html" class="nav-link fw-semibold mb-4">About us</a>
+        </li>
+        <li class="nav-item dropdown w-100">
+          <a href="#" class="nav-link dropdown-toggle fw-semibold mb-4 w-100 text-start" id="emergencyDropdownMobile" role="button" data-bs-toggle="dropdown">
+            Emergency
+          </a>
+          <ul class="dropdown-menu shadow-sm rounded-3 border border-light w-100" aria-labelledby="emergencyDropdownMobile">
+            <li><a class="dropdown-item active fw-semibold py-2" href="Find Donors.html">Find Donors</a></li>
+            <li><a class="dropdown-item fw-semibold py-2" href="Donate Now.html">Donate Now</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="Donations.html" class="nav-link fw-semibold mb-4">Donations</a>
+        </li>
+        <li class="nav-item">
+          <a href="Signup.html" class="nav-link fw-semibold mb-4">Register</a>
+        </li>
+      </ul>
+      <!-- Mobile Login/Signup Buttons -->
+      <div class="offcanvas-footer p-3 w-100">
+        <div class="navbar-buttons d-flex flex-column gap-3">
+          <a href="#">
+            <button type="button" class="btn btn-outline-danger px-3 py-2 fw-semibold w-100">
+              Login
+            </button>
+          </a>
+          <a href="Signup.html">
+            <button type="button" class="btn btn-danger px-3 py-2 fw-semibold w-100">
+              Sign up
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!--Navbar-->
+
+
+<body>
+<div class="container mt-5 pt-5 pt-md-0">
+  <div class="row align-items-center">
+    <div class="col-md-6 d-none d-md-block">
+      <%= image_tag "https://dsazhl88swmg2.cloudfront.net/helpalife/worldmapwhite.png", class:"img-fluid", alt:"World Map with Donor Locations"%>
+    </div>
+    <div class="col-md-6">
+      <h2>About Us</h2>
+      <p>We are here to provide system through which people in need, then can find donors and notify them as quick as possible via push notifications, SMS notifications and emails.</p>
+      <p>We ensure that blood donors are easily accessible by connecting them with those in need in real-time. Our platform streamlines the process, allowing for faster responses and quicker action.</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="container mt-5 position-relative">
+  <div class="row">
+    <div class="col-md-6">
+      <h5 class="text-danger">About Us</h5>
+      <h2>History & Motto</h2>
+      <p>HelpALife is a non-profit organization that started its service in January 2014. Our goal is to eliminate the challenges of donor shortages by providing a reliable platform for efficient donor matching.</p>
+      <p><strong>Love all, do good, and live well</strong> – our motto guides us in making a positive impact. Through these values, we strive to help save lives and build a compassionate community.</p>
+      <div class="position-relative w-100" style="z-index: 2;">
+        <%= image_tag "https://dsazhl88swmg2.cloudfront.net/helpalife/aboutpage2.png",class:"img-fluid d-block mx-auto position-relative", style:"margin-bottom: -500px; margin-top: 50px; height: 400px; width: 700px;" , alt:"Blood Donation Process"%>
+      </div>
+    </div>
+    <div class="col-md-6 d-flex flex-column align-items-center position-relative">
+      <div class="position-relative w-100" style="z-index: 2;">
+        <%= image_tag "https://dsazhl88swmg2.cloudfront.net/helpalife/aboutpage1.png" ,class:"img-fluid d-block mx-auto position-relative mt-5 mt-md-5 pt-5 pt-md-0" ,style:"margin-bottom: -50px; margin-top: 50px; height: 500px; width: 700px;" ,alt:"Blood Donation Process"%>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid d-md-flex flex-column justify-content-center align-items-center bg-danger text-white position-relative w-100" style="min-height: 35vh; z-index: 1; padding-top:150px; padding-bottom: 50px;">
+  <h2 class="col-12 col-md-6 text-center text-md-center mt-0 mt-md-5 pt-0 pt-md-5 mx-auto">
+    Join us in the fight to save lives
+  </h2>
+  <p class="col-12 col-md-7 text-center text-md-center mx-auto">
+    We have been dedicated to finding blood donors by creating a reliable network that ensures critical support when it's needed most. Our mission is to ensure that no one has to wait for critical blood. By partnering with us, you can help make a lasting impact, providing hope and support to those in need. Together, we can turn a single donation into a life saved.
+  </p>
+</div>
+<%= render 'layouts/partials/footer' %>
+</body>
+</html>

@@ -34,4 +34,6 @@
 /config/master.key
 config/database.yml
 node_modules
+.rvmrc
+.idea
 .env
