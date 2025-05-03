@@ -22,8 +22,6 @@ window.initMap = function () {
 
                             map.setCenter(latLng);
                             map.setZoom(18);
-
-                            // Ensure the elements are loaded before setting the values
                             const latitudeInput = document.getElementById("latitude");
                             const longitudeInput = document.getElementById("longitude");
 
@@ -120,6 +118,12 @@ function initAutocomplete() {
     });
 }
 
+// Initialize autocomplete after Turbo has loaded the page
+document.addEventListener("turbo:load", () => {
+    setTimeout(() => {
+        initAutocomplete();
+    }, 50);
+});
 
 document.addEventListener("turbo:load", function () {
     // Phone input setup
