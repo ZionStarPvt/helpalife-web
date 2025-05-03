@@ -11,12 +11,11 @@ class DonorController < ApplicationController
                     .order(created_at: :desc)
 
         users.each do |user|
-          user_coordinates = [user.latitude.to_f, user.longitude.to_f]
+          user_coordinates = [ user.latitude.to_f, user.longitude.to_f ]
           distance = Geocoder::Calculations.distance_between(coordinates, user_coordinates)
-
           if distance <= 32
-            location = Geocoder.search([user.latitude, user.longitude]).first
-            address = [location&.city, location&.state].compact.join(', ')
+            location = Geocoder.search([ user.latitude, user.longitude ]).first
+            address = [ location&.city, location&.state ].compact.join(", ")
             @users << {
               name: user.name,
               address: address,
@@ -35,12 +34,12 @@ class DonorController < ApplicationController
                     .order(created_at: :desc)
 
         users.each do |user|
-          user_coordinates = [user.latitude.to_f, user.longitude.to_f]
+          user_coordinates = [ user.latitude.to_f, user.longitude.to_f ]
           distance = Geocoder::Calculations.distance_between(coordinates, user_coordinates)
 
           if distance <= 32
-            location = Geocoder.search([user.latitude, user.longitude]).first
-            address = [location&.city, location&.state].compact.join(', ')
+            location = Geocoder.search([ user.latitude, user.longitude ]).first
+            address = [ location&.city, location&.state ].compact.join(", ")
             @users << {
               name: user.name,
               address: address,
@@ -57,11 +56,11 @@ class DonorController < ApplicationController
 
       users.each do |user|
         address = if user.latitude.present? && user.longitude.present?
-                    location = Geocoder.search([user.latitude, user.longitude]).first
-                    [location&.city, location&.state].compact.join(', ')
-                  else
+                    location = Geocoder.search([ user.latitude, user.longitude ]).first
+                    [ location&.city, location&.state ].compact.join(", ")
+        else
                     "Location not available"
-                  end
+        end
 
         @users << {
           name: user.name,
@@ -76,11 +75,11 @@ class DonorController < ApplicationController
 
       users.each do |user|
         address = if user.latitude.present? && user.longitude.present?
-                    location = Geocoder.search([user.latitude, user.longitude]).first
-                    [location&.city, location&.state].compact.join(', ')
-                  else
+                    location = Geocoder.search([ user.latitude, user.longitude ]).first
+                    [ location&.city, location&.state ].compact.join(", ")
+        else
                     "Location not available"
-                  end
+        end
 
         @users << {
           name: user.name,

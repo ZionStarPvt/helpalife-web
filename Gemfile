@@ -62,10 +62,8 @@ group :test do
   gem "selenium-webdriver"
 end
 gem "geocoder"
-gem 'pg'
+gem "pg"
 gem "cssbundling-rails", "~> 1.4"
-gem 'dotenv-rails'
+gem "dotenv-rails"
 gem "bootstrap", "~> 5.3"
 gem "devise", "~> 4.9.0"
-
-
