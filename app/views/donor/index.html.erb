@@ -4,57 +4,40 @@
     <div class="col-md-6">
       <!-- Search Bar Header -->
       <h3 class="text-center fw-bold pt-5">Search for blood donors</h3>
-
-      <!-- Mobile: Each Field on a New Line -->
-      <div class="row mt-3 gx-2">
-        <div class="col-12 col-md-4 mb-2">
-          <select class="form-select">
-            <option selected>Blood Group</option>
-            <option value="A+">A1+</option>
-            <option value="A-">A1-</option>
-            <option value="B+">A2+</option>
-            <option value="B-">A2-</option>
-            <option value="O+">B+</option>
-            <option value="O-">B-</option>
-            <option value="AB+">A1B+</option>
-            <option value="AB-">A1B-</option>
-            <option value="AB-">A2B+</option>
-            <option value="AB-">A2B-</option>
-            <option value="AB-">AB+</option>
-            <option value="AB-">AB-</option>
-            <option value="AB-">O+</option>
-            <option value="AB-">O-</option>
-            <option value="AB-">A+</option>
-            <option value="AB-">A-</option>
-            <option value="AB-">hh</option>
-          </select>
-        </div>
-        <div class="col-12 col-md-7 mb-2">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Location" id="searchInput">
-            <span class="input-group-text" id="get-location">
-                            <i><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-crosshair2" viewBox="0 0 16 16">
-                                <path d="M8 0a.5.5 0 0 1 .5.5v.518A7 7 0 0 1 14.982 7.5h.518a.5.5 0 0 1 0 1h-.518A7 7 0 0 1 8.5 14.982v.518a.5.5 0 0 1-1 0v-.518A7 7 0 0 1 1.018 8.5H.5a.5.5 0 0 1 0-1h.518A7 7 0 0 1 7.5 1.018V.5A.5.5 0 0 1 8 0m-.5 2.02A6 6 0 0 0 2.02 7.5h1.005A5 5 0 0 1 7.5 3.025zm1 1.005A5 5 0 0 1 12.975 7.5h1.005A6 6 0 0 0 8.5 2.02zM12.975 8.5A5 5 0 0 1 8.5 12.975v1.005a6 6 0 0 0 5.48-5.48zM7.5 12.975A5 5 0 0 1 3.025 8.5H2.02a6 6 0 0 0 5.48 5.48zM10 8a2 2 0 1 0-4 0 2 2 0 0 0 4 0"/>
-                              </svg></i>
-                        </span>
+      <form method="get" action="<%= donors_path %>">
+        <!-- Mobile: Each Field on a New Line -->
+        <div class="row mt-3 gx-2">
+          <div class="col-12 col-md-4 mb-2">
+            <select class="form-select" name="blood_group">
+              <option disabled <%= params[:blood_group].blank? ? 'selected' : '' %>>Blood Group</option>
+              <% ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-", "hh"].each do |group| %>
+                <option value="<%= group %>" <%= "selected" if params[:blood_group] == group %>><%= group %></option>
+              <% end %>
+            </select>
+          </div>
+          <div class="col-12 col-md-7 mb-2">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Location" id="searchInput" name="location" value="<%= params[:location] %>">
+              <span class="input-group-text" id="get-location">
+               <i class="bi bi-crosshair2 fs-6"></i>
+              </span>
+              <input type="hidden" id="latitude" name="latitude">
+              <input type="hidden" id="longitude" name="longitude">
+            </div>
+          </div>
+          <!-- Search Button -->
+          <div class="col-12 col-md-1">
+            <button class="btn btn-danger w-100 d-md-flex align-items-center justify-content-center">
+              <i class="bi bi-search d-none d-md-inline"></i> <!-- Icon only on desktop -->
+              <span class="d-inline d-md-none">Search</span> <!-- Text only on mobile -->
+            </button>
           </div>
         </div>
-        <!-- Search Button -->
-        <!-- Search Button -->
-        <div class="col-12 col-md-1">
-          <button class="btn btn-danger w-100 d-md-flex align-items-center justify-content-center">
-            <i class="bi bi-search d-none d-md-inline"></i> <!-- Icon only on desktop -->
-            <span class="d-inline d-md-none">Search</span> <!-- Text only on mobile -->
-          </button>
-        </div>
+      </form>
 
-
-      </div>
     </div>
   </div>
 </div>
-<div id="map" style="max-height: 600px; width: 1000px; margin-top: 20px;"></div>
-
 <!-- Text for details submission -->
 <div class="container mx-auto">
   <p class=" mt-3">Submit the details to connect with donors</p>
@@ -132,8 +115,6 @@
           <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#donorRequestModal">
             Request Donors
           </button>
-
-
         </form>
       </div>
     </div>
@@ -183,152 +164,34 @@
       <p class="fw-bold mt-3 mb-2">Available blood donors</p>
       <div class="donor-list row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-md-3">
         <!-- Donor Card -->
-        <div class="col">
-          <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
-            <p class="fw-bold mb-1">Jelina Desnslova</p>
-            <p class="text-secondary small mb-1">Route 26, New York</p>
-            <p class="mb-0 fw-semibold small">Blood Group : O+</p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
-            <p class="fw-bold mb-1">Jelina Desnslova</p>
-            <p class="text-secondary small mb-1">Route 26, New York</p>
-            <p class="mb-0 fw-semibold small">Blood Group : O+</p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
-            <p class="fw-bold mb-1">Jelina Desnslova</p>
-            <p class="text-secondary small mb-1">Route 26, New York</p>
-            <p class="mb-0 fw-semibold small">Blood Group : O+</p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
-            <p class="fw-bold mb-1">Jelina Desnslova</p>
-            <p class="text-secondary small mb-1">Route 26, New York</p>
-            <p class="mb-0 fw-semibold small">Blood Group : O+</p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
-            <p class="fw-bold mb-1">Jelina Desnslova</p>
-            <p class="text-secondary small mb-1">Route 26, New York</p>
-            <p class="mb-0 fw-semibold small">Blood Group : O+</p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
-            <p class="fw-bold mb-1">Jelina Desnslova</p>
-            <p class="text-secondary small mb-1">Route 26, New York</p>
-            <p class="mb-0 fw-semibold small">Blood Group : O+</p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
-            <p class="fw-bold mb-1">Jelina Desnslova</p>
-            <p class="text-secondary small mb-1">Route 26, New York</p>
-            <p class="mb-0 fw-semibold small">Blood Group : O+</p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
-            <p class="fw-bold mb-1">Jelina Desnslova</p>
-            <p class="text-secondary small mb-1">Route 26, New York</p>
-            <p class="mb-0 fw-semibold small">Blood Group : O+</p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
-            <p class="fw-bold mb-1">Jelina Desnslova</p>
-            <p class="text-secondary small mb-1">Route 26, New York</p>
-            <p class="mb-0 fw-semibold small">Blood Group : O+</p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
-            <p class="fw-bold mb-1">Jelina Desnslova</p>
-            <p class="text-secondary small mb-1">Route 26, New York</p>
-            <p class="mb-0 fw-semibold small">Blood Group : O+</p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
-            <p class="fw-bold mb-1">Jelina Desnslova</p>
-            <p class="text-secondary small mb-1">Route 26, New York</p>
-            <p class="mb-0 fw-semibold small">Blood Group : O+</p>
-          </div>
-        </div>
-        <div class="col">
-          <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-              <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-            </svg>
-            <p class="fw-bold mb-1">Jelina Desnslova</p>
-            <p class="text-secondary small mb-1">Route 26, New York</p>
-            <p class="mb-0 fw-semibold small">Blood Group : O+</p>
-          </div>
-        </div>
+        <% if @users.present? %>
+          <% @users.each do |user| %>
+            <div class="col">
+              <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
+                <i class="bi bi-person-circle fs-1"></i>
+                <p class="fw-bold mb-1"><%= user[:name] %></p>
+                <p class="text-secondary small mb-1"><%= user[:address] %></p>
+                <p class="mb-0 fw-semibold small">Blood Group : <%= user[:blood_group] %></p>
+
+              </div>
+            </div>
+          <% end %>
+        <% end %>
       </div>
     </div>
-
     <!-- Map Section (Right on Desktop, Full Width on Mobile) -->
     <div class="col-12 col-md-6 order-md-2">
       <p class="fw-bold mt-3 mb-2">Donors location</p>
       <div class="map-container border border-2 border-secondary border-opacity-10 rounded-3"
            style="height: 400px; background-color: #f0f0f0; min-height: 450px; margin-bottom: 50px;">
-        <!-- Embed your map here -->
+         Embed your map here
         <iframe src="https://maps.google.com/maps?q=World&output=embed" width="100%" height="550" style="border-radius:10px;"></iframe>
       </div>
     </div>
   </div>
 </div>
+    </div>
+
 
 <!-- Swipe-Up Trigger Button (Only visible on mobile) -->
 <button class="btn btn-danger w-100 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#donorListCanvas">
@@ -342,99 +205,22 @@
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
   </div>
   <div class="offcanvas-body">
-    <div class="row row-cols-1 g-3">
-      <div class="col-6">
-        <div class="p-3 text-center border rounded">
-          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-          </svg>
-          <p class="fw-bold mb-2">Jelina Desnslova</p>
-          <p class="small text-secondary mb-1">Route 26, New York</p>
-          <p class="fw-semibold mb-0">Blood Group: O+</p>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="p-3 text-center border rounded">
-          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-          </svg>
-          <p class="fw-bold mb-2">Jelina Desnslova</p>
-          <p class="small text-secondary mb-1">Route 26, New York</p>
-          <p class="fw-semibold mb-0">Blood Group: O+</p>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="p-3 text-center border rounded">
-          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-          </svg>
-          <p class="fw-bold mb-2">Jelina Desnslova</p>
-          <p class="small text-secondary mb-1">Route 26, New York</p>
-          <p class="fw-semibold mb-0">Blood Group: O+</p>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="p-3 text-center border rounded">
-          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-          </svg>
-          <p class="fw-bold mb-2">Jelina Desnslova</p>
-          <p class="small text-secondary mb-1">Route 26, New York</p>
-          <p class="fw-semibold mb-0">Blood Group: O+</p>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="p-3 text-center border rounded">
-          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-          </svg>
-          <p class="fw-bold mb-2">Jelina Desnslova</p>
-          <p class="small text-secondary mb-1">Route 26, New York</p>
-          <p class="fw-semibold mb-0">Blood Group: O+</p>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="p-3 text-center border rounded">
-          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-          </svg>
-          <p class="fw-bold mb-2">Jelina Desnslova</p>
-          <p class="small text-secondary mb-1">Route 26, New York</p>
-          <p class="fw-semibold mb-0">Blood Group: O+</p>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="p-3 text-center border rounded">
-          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-          </svg>
-          <p class="fw-bold mb-2">Jelina Desnslova</p>
-          <p class="small text-secondary mb-1">Route 26, New York</p>
-          <p class="fw-semibold mb-0">Blood Group: O+</p>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="p-3 text-center border rounded">
-          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle mb-3" viewBox="0 0 16 16">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-          </svg>
-          <p class="fw-bold mb-2">Jelina Desnslova</p>
-          <p class="small text-secondary mb-1">Route 26, New York</p>
-          <p class="fw-semibold mb-0">Blood Group: O+</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    <div class="row row-cols-2 g-3">
+      <div class="col-12">
+        <% if @users.present? %>
+          <% @users.each do |user| %>
+            <div class="col">
+              <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
+                <i class="bi bi-person-circle fs-1"></i>
+                <p class="fw-bold mb-1"><%= user[:name] %></p>
+                <p class="text-secondary small mb-1"><%= user[:address] %></p>
+                <p class="mb-0 fw-semibold small">Blood Group : <%= user[:blood_group] %></p>
 
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
 
 <!-- More donor cards... -->
 </div>

@@ -22,8 +22,6 @@ window.initMap = function () {
 
                             map.setCenter(latLng);
                             map.setZoom(18);
-
-                            // Ensure the elements are loaded before setting the values
                             const latitudeInput = document.getElementById("latitude");
                             const longitudeInput = document.getElementById("longitude");
 
@@ -92,10 +90,14 @@ window.initMap = function () {
     });
 };
 
+// Initialize autocomplete for the search input field
 function initAutocomplete() {
     const input = document.getElementById("searchInput");
-    if (!input || !google.maps.places) {
-        console.error("Autocomplete input not found or Google Places not loaded.");
+    const latInput = document.getElementById("latitude");
+    const lngInput = document.getElementById("longitude");
+
+    if (!input || !latInput || !lngInput) {
+        console.warn("Required inputs for autocomplete not found.");
         return;
     }
 
@@ -105,15 +107,23 @@ function initAutocomplete() {
 
     autocomplete.addListener("place_changed", () => {
         const place = autocomplete.getPlace();
-        if (!place || !place.geometry) {
-            console.error("No details available for input: '" + input.value + "'");
+        if (!place.geometry) {
+            console.error("No geometry available for this place.");
             return;
         }
 
-        input.value = place.formatted_address || input.value;
+        latInput.value = place.geometry.location.lat();
+        lngInput.value = place.geometry.location.lng();
+        console.log("Autocomplete set lat/lng:", latInput.value, lngInput.value);
     });
 }
 
+// Initialize autocomplete after Turbo has loaded the page
+document.addEventListener("turbo:load", () => {
+    setTimeout(() => {
+        initAutocomplete();
+    }, 50);
+});
 
 document.addEventListener("turbo:load", function () {
     // Phone input setup

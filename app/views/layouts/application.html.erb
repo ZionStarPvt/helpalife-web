@@ -20,7 +20,6 @@
   <%# Includes all stylesheet files in app/assets/stylesheets %>
   <%= stylesheet_link_tag 'application' %>
   <%= javascript_importmap_tags %>
-  <%= javascript_include_tag "bootstrap.bundle.min", "data-turbo-track": "reload", defer: true %>
   <%= javascript_include_tag "location_search" %>
 </head>
 <body>
@@ -30,7 +29,7 @@
 <%= render 'layouts/partials/header' %>
 <%= yield %>
 <div id="map" style="max-height: 600px; width: 1000px; margin-top: 20px;"></div>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3gsc7Jkqui0F-bXUWcRo3UaG8Rimz7YI&callback=initMap&libraries=places&region=us"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&libraries=places&callback=initMap"></script>
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.11/index.min.js"></script>
 </body>
 </html>
