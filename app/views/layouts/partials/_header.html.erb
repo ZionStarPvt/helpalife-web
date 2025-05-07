@@ -1,4 +1,3 @@
-<!--Navbar-->
 <nav class="navbar navbar-expand-lg fixed-top bg-white py-3">
   <div class="container d-flex justify-content-between align-items-center">
     <!-- Logo -->
@@ -8,17 +7,19 @@
 
     <!-- Profile Icon + Toggler for Mobile -->
     <div class="d-lg-none d-flex align-items-center gap-3">
-      <!-- Profile Icon (SVG) -->
-      <a href="profile.html" class="text-decoration-none">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-             class="bi bi-person-circle text-secondary" viewBox="0 0 16 16">
-          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-          <path fill-rule="evenodd"
-                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-        </svg>
-      </a>
+      <% if user_signed_in? %>
+        <!-- Profile Icon for Mobile -->
+        <a href="#" class="text-decoration-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+               class="bi bi-person-circle text-secondary" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+            <path fill-rule="evenodd"
+                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+          </svg>
+        </a>
+      <% end %>
 
-      <!-- Toggler Button -->
+      <!-- Toggler -->
       <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -31,55 +32,85 @@
           <a href="<%= root_path %>" class="nav-link fw-semibold<%= ' text-danger' if current_page?(root_path) %>">Home</a>
         </li>
         <li class="nav-item">
-          <a href="<%= about_path %>" class="nav-link fw-semibold<%= ' text-danger' if current_page?(about_path) %>">About us</a>
+          <a href="<%= about_path %>" class="nav-link fw-semibold<%= ' text-danger' if current_page?(about_path) %>">About
+            us</a>
         </li>
         <li class="nav-item dropdown">
-          <a href="#" class="nav-link dropdown-toggle fw-semibold<%= ' text-danger' if current_page?(donors_path) || request.path.include?('Donate Now') %>" id="emergencyDropdown" role="button" data-bs-toggle="dropdown">
+          <a href="#"
+             class="nav-link dropdown-toggle fw-semibold<%= ' text-danger' if current_page?(donors_path) || request.path.include?('Donate Now') %>"
+             id="emergencyDropdown"
+             role="button"
+             data-bs-toggle="dropdown"
+             aria-expanded="false"
+             data-turbo="false">
             Emergency
           </a>
-          <ul class="dropdown-menu shadow-sm rounded-3 border border-light">
-            <a href="<%= donors_path(anchor: 'find-donors') %>" class="dropdown-item fw-semibold py-2<%= ' text-danger' if current_page?(donors_path) %>">Find Donors</a>
-            <li><a class="dropdown-item fw-semibold py-2<%= ' text-danger' if request.path.include?('Donate Now') %>" href="#">Donate Now</a></li>
+          <ul class="dropdown-menu shadow-sm rounded-3 border border-light" aria-labelledby="emergencyDropdown">
+            <li>
+              <a href="<%= donors_path(anchor: 'find-donors') %>"
+                 class="dropdown-item fw-semibold py-2<%= ' text-danger' if current_page?(donors_path) %>"
+                 data-turbo="false">
+                Find Donors
+              </a>
+            </li>
+            <li>
+              <a href="#"
+                 class="dropdown-item fw-semibold py-2<%= ' text-danger' if request.path.include?('Donate Now') %>"
+                 data-turbo="false">
+                Donate Now
+              </a>
+            </li>
           </ul>
         </li>
         <li class="nav-item">
           <a href="<%= donations_path %>" class="nav-link fw-semibold<%= ' text-danger' if current_page?(donations_path) %>">Donations</a>
         </li>
         <li class="nav-item">
-          <a href="<%= register_path %>" class="nav-link fw-semibold<%= ' text-danger' if current_page?(register_path) %>">Register</a>
+          <a href="<%= new_user_registration_path %>" class="nav-link fw-semibold<%= ' text-danger' if current_page?(new_user_registration_path) %>">Register</a>
         </li>
       </ul>
     </div>
-
     <!-- Desktop Buttons -->
-    <div class="navbar-buttons d-none d-lg-flex gap-3">
-      <a href="#">
-        <button type="button" class="btn btn-outline-danger px-3 py-2 fw-semibold">
-          Login
-        </button>
-      </a>
-      <a href="Signup.html">
-        <button type="button" class="btn btn-danger px-3 py-2 fw-semibold">
-          Sign up
-        </button>
-      </a>
-      <a href="profile.html">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle mt-2 text-secondary" viewBox="0 0 16 16">
-          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-        </svg>
-      </a>
+    <div class="navbar-buttons d-none d-lg-flex gap-3 align-items-center">
+      <% if user_signed_in? %>
+        <!-- Profile Dropdown -->
+        <div class="dropdown">
+          <a class="dropdown-toggle text-decoration-none" href="#" role="button" id="profileDropdown"
+             data-bs-toggle="dropdown" aria-expanded="false" data-turbo="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                 class="bi bi-person-circle text-secondary" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+              <path fill-rule="evenodd"
+                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+            </svg>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="profileDropdown">
+            <li>
+              <%= link_to "Sign Out", destroy_user_session_path,
+                          method: :delete,
+                          data: { turbo_method: :delete },
+                          class: "dropdown-item fw-semibold py-2 text-danger" %>
+            </li>          </ul>
+        </div>
+      <% else %>
+        <!-- Login & Signup Buttons -->
+        <a href="<%= new_user_session_path %>" class="text-decoration-none">
+          <button type="button" class="btn btn-outline-danger px-3 py-2 fw-semibold">Login</button>
+        </a>
+        <a href="<%= new_user_registration_path %>" class="text-decoration-none">
+          <button type="button" class="btn btn-danger px-3 py-2 fw-semibold">Sign up</button>
+        </a>
+      <% end %>
     </div>
   </div>
-
-  <!-- Mobile Offcanvas Menu -->
+  <!-- Mobile Offcanvas -->
   <div class="offcanvas offcanvas-end d-lg-none" tabindex="-1" id="offcanvasNavbar">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title">Menu</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
     </div>
     <div class="offcanvas-body d-flex flex-column justify-content-between align-items-start">
-      <ul class="navbar-nav text-start">
+      <ul class="navbar-nav text-start w-100">
         <li class="nav-item">
           <a href="<%= root_path %>" class="nav-link fw-semibold mb-4<%= ' text-danger' if current_page?(root_path) %>">Home</a>
         </li>
@@ -91,35 +122,43 @@
             Emergency
           </a>
           <ul class="dropdown-menu shadow-sm rounded-3 border border-light w-100" aria-labelledby="emergencyDropdownMobile">
-            <li><a class="dropdown-item fw-semibold py-2<%= ' text-danger' if current_page?(donors_path) %>" href="<%= donors_path(anchor: 'find-donors') %>">Find Donors</a></li>
-            <li><a class="dropdown-item fw-semibold py-2<%= ' text-danger' if request.path.include?('Donate Now') %>" href="#">Donate Now</a></li>
+            <li>
+              <a class="dropdown-item fw-semibold py-2<%= ' text-danger' if current_page?(donors_path) %>" href="<%= donors_path(anchor: 'find-donors') %>">Find Donors</a>
+            </li>
+            <li>
+              <a class="dropdown-item fw-semibold py-2<%= ' text-danger' if request.path.include?('Donate Now') %>" href="#">Donate Now</a>
+            </li>
           </ul>
         </li>
-
         <li class="nav-item">
           <a href="<%= donations_path %>" class="nav-link fw-semibold mb-4<%= ' text-danger' if current_page?(donations_path) %>">Donations</a>
         </li>
         <li class="nav-item">
-          <a href="<%= register_path %>" class="nav-link fw-semibold<%= ' text-danger' if current_page?(register_path) %>">Register</a>
+          <a href="<%= new_user_registration_path %>" class="nav-link fw-semibold<%= ' text-danger' if current_page?(new_user_registration_path) %>">Register</a>
         </li>
+
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "Sign Out", destroy_user_session_path,
+                        method: :delete,
+                        data: { turbo_method: :delete },
+                        class: "nav-link fw-semibold text-danger mb-4" %>
+          </li>
+        <% end %>
       </ul>
-      <!-- Mobile Login/Signup Buttons -->
-      <div class="offcanvas-footer p-3 w-100">
-        <div class="navbar-buttons d-flex flex-column gap-3">
-          <a href="#">
-            <button type="button" class="btn btn-outline-danger px-3 py-2 fw-semibold w-100">
-              Login
-            </button>
-          </a>
-          <a href="Signup.html">
-            <button type="button" class="btn btn-danger px-3 py-2 fw-semibold w-100">
-              Sign up
-            </button>
-          </a>
+      <% unless user_signed_in? %>
+        <!-- Mobile Login/Signup Buttons -->
+        <div class="offcanvas-footer p-3 w-100">
+          <div class="navbar-buttons d-flex flex-column gap-3">
+            <a href="<%= new_user_session_path %>">
+              <button type="button" class="btn btn-outline-danger px-3 py-2 fw-semibold w-100">Login</button>
+            </a>
+            <a href="<%= new_user_registration_path %>">
+              <button type="button" class="btn btn-danger px-3 py-2 fw-semibold w-100">Sign up</button>
+            </a>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </nav>
-
-<!--Navbar-->
