@@ -24,6 +24,13 @@
 </head>
 <body>
 
+<% flash.each do |key, message| %>
+  <div class="position-fixed start-50 translate-middle-x alert <%= bootstrap_flash_class(key) %> alert-dismissible fade show text-center"
+       role="alert"
+       style="top: 80px; min-width: 300px; z-index: 9999;">
+    <%= message %>
+  </div>
+<% end %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <!-- Include the Header -->
 <%= render 'layouts/partials/header' %>
@@ -31,5 +38,17 @@
 <div id="map" style="max-height: 600px; width: 1000px; margin-top: 20px;"></div>
 <script defer src="https://maps.googleapis.com/maps/api/js?key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&libraries=places&callback=initMap"></script>
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.11/index.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const flashMessages = document.querySelectorAll('.alert');
+        flashMessages.forEach((msg) => {
+            setTimeout(() => {
+                msg.style.transition = 'opacity 0.5s ease-out';
+                msg.style.opacity = '0';
+                setTimeout(() => msg.remove(), 500); // removes it after fade out
+            }, 5000); // 5 seconds
+        });
+    });
+</script>
 </body>
 </html>

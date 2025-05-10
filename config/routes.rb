@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   get "about", to: "home#about"
   get "donations", to: "home#donations"
   devise_scope :user do
-    devise_for :users, controllers: { registrations: "users/registrations" }
+    devise_for :users, controllers: {
+      registrations: 'users/registrations',
+      sessions:'users/sessions'
+    }
     get "register", to: "users/registrations#new"
   end
 end
