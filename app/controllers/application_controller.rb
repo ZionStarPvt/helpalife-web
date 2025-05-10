@@ -17,8 +17,4 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:email, :password, :current_password])
     devise_parameter_sanitizer.permit(:sign_in, keys: [:email])
   end
-
-  def home
-    flash.now[:notice] = "Test Flash Message"
-  end
 end
