@@ -10,7 +10,7 @@
     <div class="d-lg-none d-flex align-items-center gap-3">
       <% if user_signed_in? %>
         <!-- Profile Icon for Mobile -->
-        <a href="#" class="text-decoration-none profile-mobile-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
+        <a href="/users/edit" class="text-decoration-none profile-mobile-icon" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar">
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                class="bi bi-person-circle text-secondary" viewBox="0 0 16 16">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -71,7 +71,7 @@
     <div class="navbar-buttons d-none d-lg-flex gap-3 align-items-center">
       <% if user_signed_in? %>
         <!-- Profile Icon for Desktop -->
-        <a href="#" class="text-decoration-none">
+        <a href="/users/edit" class="text-decoration-none">
           <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                class="bi bi-person-circle text-secondary" viewBox="0 0 16 16">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
