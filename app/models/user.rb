@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-
+  has_many :blood_requirements
 
   # Reverse geocode to get address from latitude & longitude
   # reverse_geocoded_by :latitude, :longitude

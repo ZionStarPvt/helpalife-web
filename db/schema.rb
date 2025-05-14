@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_11_172704) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_06_110851) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "blood_requirements", force: :cascade do |t|
+    t.integer "user_id"
+    t.date "required_date"
+    t.integer "required_units"
+    t.float "latitude"
+    t.float "longitude"
+    t.string "country_code"
+    t.text "contact_number"
+    t.text "reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "location"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name", default: "", null: false

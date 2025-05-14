@@ -8,5 +8,6 @@ Rails.application.routes.draw do
   devise_scope :user do
     devise_for :users, controllers: { registrations: "users/registrations" }
     get "register", to: "users/registrations#new"
+    resources :blood_requirements, only: [:new, :create]
   end
 end
