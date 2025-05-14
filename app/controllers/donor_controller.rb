@@ -1,6 +1,5 @@
 class DonorController < ApplicationController
   def index
-
     @blood_requirement = BloodRequirement.new
 
     @users = []
