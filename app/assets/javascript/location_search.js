@@ -101,6 +101,7 @@ function initAutocomplete() {
         return;
     }
 
+    // Initialize autocomplete for main input (with lat/lng extraction)
     const autocomplete = new google.maps.places.Autocomplete(input, {
         types: ["geocode"],
     });
@@ -116,6 +117,14 @@ function initAutocomplete() {
         lngInput.value = place.geometry.location.lng();
         console.log("Autocomplete set lat/lng:", latInput.value, lngInput.value);
     });
+
+    // Initialize autocomplete for second input (no lat/lng needed)
+    const input2 = document.getElementById("searchInput1");
+    if (input2) {
+        new google.maps.places.Autocomplete(input2, {
+            types: ["geocode"],
+        });
+    }
 }
 
 // Initialize autocomplete after Turbo has loaded the page
@@ -124,6 +133,7 @@ document.addEventListener("turbo:load", () => {
         initAutocomplete();
     }, 50);
 });
+
 
 document.addEventListener("turbo:load", function () {
     // Phone input setup
@@ -187,7 +197,7 @@ function isNumberKey(evt) {
     return true;
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("turbo:load", function () {
     const form = document.querySelector('form');
     const fields = document.querySelectorAll('.validate-me');
     const password = document.getElementById('password');
@@ -202,7 +212,6 @@ document.addEventListener('DOMContentLoaded', function () {
     form.addEventListener('submit', function (event) {
         let valid = true;
 
-        // Required field check
         fields.forEach(field => {
             field.classList.remove('is-valid', 'is-invalid');
 
@@ -239,3 +248,59 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+document.addEventListener("turbo:load", function () {
+    const select = document.getElementById('country-code');
+    if (!select) return;
+
+    const selectedValue = select.dataset.selected;
+
+    async function loadCountryCodes() {
+        try {
+            const response = await fetch('https://restcountries.com/v3.1/all');
+            const countries = await response.json();
+
+            const sorted = countries
+                .filter(c => c.idd && c.idd.root)
+                .map(c => ({
+                    name: c.name.common,
+                    code: c.idd.root + (c.idd.suffixes ? c.idd.suffixes[0] : '')
+                }))
+                .sort((a, b) => a.name.localeCompare(b.name));
+
+            select.innerHTML = '<option disabled value="">-- Select Code --</option>';
+
+            sorted.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.code;
+                option.textContent = `(${country.code})`;
+
+                if (country.code === selectedValue) {
+                    option.selected = true;
+                }
+
+                select.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Failed to load country codes:', error);
+            select.innerHTML = '<option disabled>Error loading codes</option>';
+        }
+    }
+
+    loadCountryCodes();
+});
+
+
+
+document.addEventListener("turbo:load", function () {
+    const toggleBtn = document.getElementById("toggleMobileForm");
+    const formWrapper = document.getElementById("formWrapper");
+
+    toggleBtn?.addEventListener("click", function () {
+        if (window.innerWidth < 768) {
+            formWrapper.classList.toggle("d-none");
+            formWrapper.classList.toggle("d-block");
+        }
+    });
+});
+

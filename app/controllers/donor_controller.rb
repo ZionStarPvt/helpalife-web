@@ -1,5 +1,7 @@
 class DonorController < ApplicationController
   def index
+    @blood_requirement = BloodRequirement.new
+
     @users = []
 
     if params[:blood_group].present? && params[:location].present?

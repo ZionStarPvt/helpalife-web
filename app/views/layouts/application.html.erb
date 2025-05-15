@@ -1,8 +1,7 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= content_for(:title) || "Voluntary Blood Donors online Community" %></title>
+  <title><%= content_for(:title) || "Voluntary Blood Donors Online Community" %></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
@@ -24,12 +23,13 @@
 </head>
 <body>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-<!-- Include the Header -->
+<!-- Header -->
 <%= render 'layouts/partials/header' %>
+<%= render 'shared/flash' %>
 <%= yield %>
 <div id="map" style="max-height: 600px; width: 1000px; margin-top: 20px;"></div>
-<script defer src="https://maps.googleapis.com/maps/api/js?key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&libraries=places&callback=initMap"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&libraries=places&callback=initMap"></script>
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/@googlemaps/extended-component-library/0.6.11/index.min.js"></script>
 </body>
 </html>

@@ -1,11 +1,10 @@
-<!-- Search Bar -->
-<div class="container mt-5 pt-4">
+<!-- Search Donors -->
+<div class="container mt-5 pt-5">
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <!-- Search Bar Header -->
-      <h3 class="text-center fw-bold pt-5">Search for blood donors</h3>
+    <div class="col-md-6 ">
+      <h3 class="text-center fw-bold pt-3">Search for blood donors</h3>
+
       <form method="get" action="<%= donors_path %>">
-        <!-- Mobile: Each Field on a New Line -->
         <div class="row mt-3 gx-2">
           <div class="col-12 col-md-4 mb-2">
             <select class="form-select" name="blood_group">
@@ -25,7 +24,6 @@
               <input type="hidden" id="longitude" name="longitude">
             </div>
           </div>
-          <!-- Search Button -->
           <div class="col-12 col-md-1">
             <button class="btn btn-danger w-100 d-md-flex align-items-center justify-content-center">
               <i class="bi bi-search d-none d-md-inline"></i> <!-- Icon only on desktop -->
@@ -34,199 +32,89 @@
           </div>
         </div>
       </form>
-
     </div>
   </div>
 </div>
-<!-- Text for details submission -->
-<div class="container mx-auto">
-  <p class=" mt-3">Submit the details to connect with donors</p>
 
-  <!-- Mobile View: Toggle Button -->
-  <div class="d-md-none text-center">
-    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#detailsModal">
+<!-- Submit Details -->
+<div class="container mt-4">
+  <p class="">Submit the details to connect with donors</p>
+
+  <!-- Toggle Button: Mobile Only -->
+  <div class="d-md-none text-center mb-2">
+    <button id="toggleMobileForm" class="btn btn-danger">
       Enter Details
     </button>
   </div>
 
-  <!-- Desktop View: Show Full Form -->
-  <div class="d-none d-md-block">
-    <div class="row justify-content-center align-items-center w-100">
-      <div class="col-12 d-flex justify-content-center">
-        <div class="input-group">
-          <!-- Country Code -->
-          <span class="input-group-text px-0">
-                        <select class="form-select form-select-sm border-0 bg-transparent">
-                            <option selected>+1</option>
-                            <option value="+91">+91</option>
-                            <option value="+44">+44</option>
-                            <option value="+971">+971</option>
-                        </select>
-                    </span>
-          <!-- Phone Number -->
-          <input type="text" class="form-control form-control-sm" placeholder="Phone Number">
-          <!-- Required Date -->
-          <input type="date" class="form-control form-control-sm">
-          <!-- Required Units -->
-          <input type="number" class="form-control form-control-sm" placeholder="Required Units">
-          <!-- Reason -->
-          <input type="text" class="form-control form-control-sm" placeholder="Reason">
-          <!-- Button -->
-          <button class="btn btn-danger btn-sm rounded" data-bs-toggle="modal" data-bs-target="#requestModal">
-            Request available donors
-          </button>
+  <!-- Form (Visible on Desktop, Toggle on Mobile) -->
+  <div id="formWrapper" class="d-none d-md-block">
+    <%= form_with model: @blood_requirement, url: blood_requirements_path, method: :post, local: true do |f| %>
+      <div class="d-flex flex-column flex-md-row gap-2">
+
+        <!-- Country Code -->
+        <div class="col-md-1">
+          <select name="blood_requirement[country_code]"
+                  id="country-code"
+                  class="form-select form-select-lg"
+          data-selected="<%= @blood_requirement.country_code %>"
+          required>
+          </select>
+        </div>
+
+
+        <%= f.telephone_field :contact_number, class: "form-control", placeholder: "Phone Number", required: true %>
+        <%= f.date_field :required_date, class: "form-control", min: Date.today, required: true %>
+        <%= f.number_field :required_units, class: "form-control", placeholder: "Required Units", required: true %>
+        <%= f.text_field :reason, class: "form-control", placeholder: "Reason", required: true %>
+        <%= f.text_field :location, id: "searchInput1", class: "form-control", placeholder: "Location", autocomplete: "off", required: true %>
+        <%= f.hidden_field :latitude, id: "latitude" %>
+        <%= f.hidden_field :longitude, id: "longitude" %>
+
+        <%= f.submit "Request available donors", class: "btn btn-danger px-4 mt-2 mt-md-0" %>
+      </div>
+    <% end %>
+  </div>
+
+<!-- Request Available Donors Dialoguebox Structure (Mobile) -->
+  <div class="container mb-5 pb-5">
+    <div class="row mt-3">
+      <!-- Donor List Section -->
+      <div class="col-12 col-md-6 order-md-1">
+        <p class="fw-bold mt-3 mb-2">Available blood donors</p>
+        <% if @users.present? %>
+          <!-- Scrollable container -->
+          <div class="overflow-x-hidden" style="max-height: 550px;">
+            <div class="row row-cols-2 row-cols-md-2 row-cols-lg-3 g-2 g-md-3">
+              <% @users.each do |user| %>
+                <div class="col">
+                  <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10 h-100">
+                    <i class="bi bi-person-circle fs-1"></i>
+                    <p class="fw-bold mb-1"><%= user[:name] %></p>
+                    <p class="text-secondary small mb-1 text-truncate mx-auto" style="max-width: 160px;"><%= user[:address] %></p>
+                    <p class="mb-0 fw-semibold small">Blood Group : <%= user[:blood_group] %></p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% else %>
+          <p>No donors found.</p>
+        <% end %>
+      </div>
+
+      <!-- Map Section (Right Side) -->
+      <div class="col-12 col-md-6 order-md-2">
+        <p class="fw-bold mt-3 mb-2">Donors location</p>
+        <div class="map-container border border-2 border-secondary border-opacity-10 rounded-3"
+             style="height: 400px; background-color: #f0f0f0; min-height: 450px; margin-bottom: 50px;">
+          Embed your map here
+          <iframe src="https://maps.google.com/maps?q=World&output=embed" width="100%" height="550" style="border-radius:10px;"></iframe>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- Modal for Mobile Form -->
-<div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="detailsModalLabel">Enter your details</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <!-- Phone Number -->
-          <div class="mb-3">
-            <label class="form-label">Phone Number</label>
-            <input type="text" class="form-control" placeholder="Phone Number">
-          </div>
-          <!-- Required Date -->
-          <div class="mb-3">
-            <label class="form-label">Required Date</label>
-            <input type="date" class="form-control">
-          </div>
-          <!-- Required Units -->
-          <div class="mb-3">
-            <label class="form-label">Required Units</label>
-            <input type="number" class="form-control" placeholder="Required Units">
-          </div>
-          <!-- Reason -->
-          <div class="mb-3">
-            <label class="form-label">Reason</label>
-            <input type="text" class="form-control" placeholder="Reason">
-          </div>
-          <!-- Submit Button -->
-          <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#donorRequestModal">
-            Request Donors
-          </button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Request Available Donors Dialoguebox Structure (Mobile) -->
-<div class="modal fade" id="donorRequestModal" tabindex="-1" aria-labelledby="donorRequestModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header border-0">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body text-center fw-bold">
-        By clicking 'Request available donors', notifications will be sent to all available donors with your contact details.
-      </div>
-      <div class="modal-footer justify-content-center border-0">
-        <button type="button" class="btn btn-danger btn-sm mb-5">Request available donors</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Request Available Donors Dialoguebox Structure (Desktop)-->
-<div class="modal fade" id="requestModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="requestModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header border-0">
-
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body text-center fw-bold">
-        By clicking 'Request available donors', notifications will be sent to all available donors with your contact details.
-      </div>
-      <div class="modal-footer justify-content-center border-0">
-        <button type="button" class="btn btn-danger btn-sm mb-5">Request available donors</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<div class="container mb-5 pb-5"> <!-- Added margin and padding bottom -->
-  <div class="row mt-3">
-    <!-- Available Donors Section (Left on Desktop, Hidden on Mobile) -->
-    <div class="col-12 col-md-6 d-none d-md-block order-md-1">
-      <p class="fw-bold mt-3 mb-2">Available blood donors</p>
-      <div class="donor-list row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 g-md-3">
-        <!-- Donor Card -->
-        <% if @users.present? %>
-          <% @users.each do |user| %>
-            <div class="col">
-              <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
-                <i class="bi bi-person-circle fs-1"></i>
-                <p class="fw-bold mb-1"><%= user[:name] %></p>
-                <p class="text-secondary small mb-1"><%= user[:address] %></p>
-                <p class="mb-0 fw-semibold small">Blood Group : <%= user[:blood_group] %></p>
-
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-    <!-- Map Section (Right on Desktop, Full Width on Mobile) -->
-    <div class="col-12 col-md-6 order-md-2">
-      <p class="fw-bold mt-3 mb-2">Donors location</p>
-      <div class="map-container border border-2 border-secondary border-opacity-10 rounded-3"
-           style="height: 400px; background-color: #f0f0f0; min-height: 450px; margin-bottom: 50px;">
-         Embed your map here
-        <iframe src="https://maps.google.com/maps?q=World&output=embed" width="100%" height="550" style="border-radius:10px;"></iframe>
-      </div>
-    </div>
-  </div>
-</div>
-    </div>
-
-
-<!-- Swipe-Up Trigger Button (Only visible on mobile) -->
-<button class="btn btn-danger w-100 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#donorListCanvas">
-  ▲ View Donors List
-</button>
-
-<!-- Offcanvas Panel (Donor List) -->
-<div class="offcanvas offcanvas-bottom d-md-none h-75" tabindex="-1" id="donorListCanvas">
-  <div class="offcanvas-header">
-    <h5 class="offcanvas-title">Available blood donors</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-  </div>
-  <div class="offcanvas-body">
-    <div class="row row-cols-2 g-3">
-      <div class="col-12">
-        <% if @users.present? %>
-          <% @users.each do |user| %>
-            <div class="col">
-              <div class="bg-white p-4 rounded-3 text-center border border-2 border-secondary border-opacity-10">
-                <i class="bi bi-person-circle fs-1"></i>
-                <p class="fw-bold mb-1"><%= user[:name] %></p>
-                <p class="text-secondary small mb-1"><%= user[:address] %></p>
-                <p class="mb-0 fw-semibold small">Blood Group : <%= user[:blood_group] %></p>
-
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
-
-<!-- More donor cards... -->
-</div>
-</div>
-</div>
-
 <!-- Main Footer -->
 <footer class="bg-dark text-white py-5 mt-5">
   <div class="container">

@@ -1,0 +1,2 @@
+module BloodRequirementsHelper
+end
