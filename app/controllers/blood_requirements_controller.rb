@@ -27,7 +27,8 @@ class BloodRequirementsController < ApplicationController
       :country_code,
       :contact_number,
       :reason,
-      :location
+      :latitude,
+      :longitude
     )
   end
 end

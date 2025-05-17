@@ -2,7 +2,6 @@
   <% flash.each do |key, message| %>
     <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %> alert-dismissible fade show shadow-sm text-center" role="alert">
       <%= message %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   <% end %>
 </div>

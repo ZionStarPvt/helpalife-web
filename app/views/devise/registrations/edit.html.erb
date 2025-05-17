@@ -1,43 +1,260 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <style>
+      .form-check-input:checked {
+          background-color: #dc3545 !important;
+          border-color: #dc3545 !important;
+      }
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      .form-check-input:focus {
+          box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+      }
+
+      body {
+          background-color: #f8f9fa;
+      }
+
+      .custom-sidebar {
+          box-shadow: 5px 0 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .settings-list {
+          list-style-type: disc;
+          padding-left: 1.5rem;
+          margin-top: 1rem;
+      }
+
+      .settings-list li {
+          margin-bottom: 1rem;
+      }
+
+      .setting-title {
+          font-weight: 600;
+      }
+
+      .setting-desc {
+          font-size: 0.9rem;
+          color: #6c757d;
+      }
+  </style>
+</head>
+
+<body>
+<div class="container mt-5 pt-5">
+  <div class="row min-vh-100">
+
+    <!-- Sidebar -->
+    <div class="col-md-3 col-lg-2 d-flex flex-column flex-grow-1">
+      <div class="bg-white rounded p-3 custom-sidebar flex-grow-1" style="height: 100vh;">
+        <ul class="nav flex-column" id="sidebarTabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link text-dark active fw-bold" id="settings-tab" data-bs-toggle="tab" href="#settings" role="tab">Settings</a>
+          </li>
+          <li class="nav-item mt-2">
+            <a class="nav-link text-dark" id="help-tab" data-bs-toggle="tab" href="#help" role="tab">Help Centre</a>
+          </li>
+          <li class="nav-item mt-2">
+            <a class="nav-link text-dark" id="terms-tab" data-bs-toggle="tab" href="#terms" role="tab">Terms of Service</a>
+          </li>
+          <li class="nav-item mt-2">
+            <a class="nav-link text-dark" id="privacy-tab" data-bs-toggle="tab" href="#privacy" role="tab">Privacy Policy</a>
+          </li>
+<!--          <li class="nav-item mt-4">-->
+<!--            <a class="nav-link text-dark" id="logout-tab" data-bs-toggle="tab" href="<%#= destroy_user_session_path %>" role="tab">Log out</a>-->
+          <li class="nav-item mt-4">
+            <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "nav-link text-dark" %>
+          </li>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9 col-lg-10 p-4 tab-content">
+      <div class="tab-pane fade show active" id="settings" role="tabpanel">
+        <h5 class="fw-bold mt-4">Edit Profile</h5>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :patch, novalidate: true }) do |f| %>
+
+          <!-- Name -->
+          <div class="mb-3 row">
+            <label class="col-3 col-form-label fw-semibold">Name</label>
+            <div class="col-9">
+              <%= f.text_field :name, class: "form-control validate-me #{resource.errors[:name].any? ? 'is-invalid' : (resource.errors.any? ? 'is-valid' : '')}", placeholder: "Full name" %>
+              <% if resource.errors[:name].any? %>
+                <div class="invalid-feedback"><%= resource.errors[:name].first %></div>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3 row">
+            <label class="col-3 col-form-label fw-semibold">Email</label>
+            <div class="col-9">
+              <%= f.email_field :email, class: "form-control validate-me #{resource.errors[:email].any? ? 'is-invalid' : (resource.errors.any? ? 'is-valid' : '')}", placeholder: "Email address" %>
+              <% if resource.errors[:email].any? %>
+                <div class="invalid-feedback"><%= resource.errors[:email].first %></div>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="mb-3 row">
+            <label class="col-3 col-form-label fw-semibold" for="phone">Phone Number</label>
+            <div class="col-9">
+              <%= f.telephone_field :phone, class: "form-control validate-me #{resource.errors[:phone].any? ? 'is-invalid' : (resource.errors.any? ? 'is-valid' : '')}", placeholder: "Phone Number", id: "phone", onkeypress: "return isNumberKey(event);" %>
+              <% if resource.errors[:phone].any? %>
+                <div class="invalid-feedback"><%= resource.errors[:phone].first %></div>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Blood Group -->
+          <div class="mb-3 row">
+            <label class="col-3 col-form-label fw-semibold">Blood Group</label>
+            <div class="col-9">
+              <%= f.select :blood_group, ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-", "hh"], { prompt: "Select Blood Group" }, class: "form-select validate-me #{resource.errors[:blood_group].any? ? 'is-invalid' : (resource.errors.any? ? 'is-valid' : '')}" %>
+              <% if resource.errors[:blood_group].any? %>
+                <div class="invalid-feedback"><%= resource.errors[:blood_group].first %></div>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Location Input -->
+          <div class="mb-3 row">
+            <label class="col-3 col-form-label fw-semibold" for="location">Location</label>
+            <div class="col-9">
+              <div class="input-group">
+                <input type="text" name="location" id="searchInput"
+                       class="form-control validate-me <%= resource.errors[:location].any? ? 'is-invalid' : (resource.errors.any? ? 'is-valid' : '') %>"
+                       placeholder="Enter or tap live location">
+                <span class="input-group-text" id="get-location">
+                  <i class="bi bi-crosshair2"></i>
+                </span>
+              </div>
+              <% if resource.errors[:location].any? %>
+                <div class="invalid-feedback"><%= resource.errors[:location].first %></div>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Hidden Fields -->
+          <%= f.hidden_field :latitude, id: "latitude" %>
+          <%= f.hidden_field :longitude, id: "longitude" %>
+          <%= f.hidden_field :country_code, id: "country_code" %>
+
+
+        <!-- Location Settings -->
+        <div class="mt-5">
+          <h5 class="fw-bold">Location Settings</h5>
+          <ul class="settings-list">
+            <li>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="setting-title">Allow location access</div>
+                  <div class="setting-desc">Share your location with the website to find nearby blood needs</div>
+                </div>
+                <div class="form-check form-switch">
+<!--                  <input class="form-check-input" type="checkbox" role="switch" checked>-->
+                  <%= f.check_box :allow_location_access, class: "form-check-input", role: "switch" %>
+
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="setting-title me-3">Set default radius for nearby blood needs</div>
+<!--                <select class="form-select" style="width: auto;">-->
+<!--                  <option>10 miles</option>-->
+<!--                  <option selected>20 miles</option>-->
+<!--                  <option>30 miles</option>-->
+<!--                </select>-->
+                <%= f.select :default_radius_for_nearby_blood_needs, [["10 miles", "10"], ["20 miles", "20"], ["30 miles", "30"]],
+                             {}, class: "form-select", style: "width: auto;" %>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="setting-title">Get alerts for emergency blood request within your chosen radius</div>
+                <div class="form-check form-switch">
+<!--                  <input class="form-check-input" type="checkbox" role="switch">-->
+                  <%= f.check_box :emergency_blood_request, class: "form-check-input", role: "switch" %>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Notification Settings -->
+        <div class="mt-5">
+          <h5 class="fw-bold">Notification Settings</h5>
+          <ul class="settings-list">
+            <li>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="setting-title">Notify me via email</div>
+                  <div class="setting-desc">Get updates about your donations and blood needs via email.</div>
+                </div>
+                <div class="form-check form-switch">
+<!--                  <input class="form-check-input" type="checkbox" role="switch" checked>-->
+                  <%= f.check_box :Notify_me_via_email, class: "form-check-input", role: "switch" %>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <div class="setting-title">Enable push notifications</div>
+                  <div class="setting-desc">Get real time notifications directly on your browser for immediate needs.</div>
+                </div>
+                <div class="form-check form-switch">
+<!--                  <input class="form-check-input" type="checkbox" role="switch">-->
+                  <%= f.check_box :Enable_push_notifications, class: "form-check-input", role: "switch" %>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+          <!-- Submit -->
+          <div class="text-center">
+            <%= f.submit "Update", class: "btn btn-danger mt-4" %>
+            <%= link_to "Cancel", root_path, class: "btn btn-secondary mt-4 ms-2" %>
+
+          </div>
+        <% end %>
+        </div>
+
+        <!-- Other Tabs -->
+        <div class="tab-pane fade" id="help" role="tabpanel">
+          <h5 class="fw-bold">Help Centre</h5>
+        </div>
+        <div class="tab-pane fade" id="terms" role="tabpanel">
+          <h5 class="fw-bold">Terms of Service</h5>
+        </div>
+        <div class="tab-pane fade" id="privacy" role="tabpanel">
+          <h5 class="fw-bold">Privacy Policy</h5>
+        </div>
+<!--        <div class="tab-pane fade" id="logout" role="tabpanel">-->
+          <%#= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+<!-- Optional Styles -->
+<style>
+    .iti {
+        width: 100% !important;
+    }
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    <% if @minimum_password_length %>
-      <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-
-<%= link_to "Back", :back %>
+    .iti input {
+        width: 100% !important;
+    }
+</style>
+</body>
+</html>
