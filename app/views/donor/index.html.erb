@@ -1,24 +1,25 @@
 <!-- Search Donors -->
 <div class="container mt-5 pt-5">
-  <div class="row justify-content-center">
+  <div class="row justify-content-center ">
     <div class="col-md-6 ">
       <h3 class="text-center fw-bold pt-3">Search for blood donors</h3>
 
       <form method="get" action="<%= donors_path %>">
         <div class="row mt-3 gx-2">
-          <div class="col-12 col-md-4 mb-2">
-            <select class="form-select" name="blood_group">
+          <div class="col-12 col-md-4 mb-3 mb-md-2">
+            <select class="form-select form-select-lg text-secondary" name="blood_group">
               <option disabled <%= params[:blood_group].blank? ? 'selected' : '' %>>Blood Group</option>
               <% ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-", "hh"].each do |group| %>
                 <option value="<%= group %>" <%= "selected" if params[:blood_group] == group %>><%= group %></option>
               <% end %>
             </select>
           </div>
-          <div class="col-12 col-md-7 mb-2">
+
+          <div class="col-12 col-md-7  mb-3 mb-md-0">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Location" id="searchInput" name="location" value="<%= params[:location] %>">
+              <input type="text" class="form-control form-select-lg text-secondary"  placeholder="Location" id="searchInput" name="location" value="<%= params[:location] %>">
               <span class="input-group-text" id="get-location">
-               <i class="bi bi-crosshair2 fs-6"></i>
+                <i class="bi bi-crosshair2 fs-6" style="cursor: pointer;"></i>
               </span>
               <input type="hidden" id="latitude" name="latitude">
               <input type="hidden" id="longitude" name="longitude">
@@ -30,6 +31,7 @@
               <span class="d-inline d-md-none">Search</span> <!-- Text only on mobile -->
             </button>
           </div>
+
         </div>
       </form>
     </div>
@@ -56,15 +58,22 @@
         <div class="col-md-1">
           <select name="blood_requirement[country_code]"
                   id="country-code"
-                  class="form-select form-select-lg"
-          data-selected="<%= @blood_requirement.country_code %>"
-          required>
+                  class="form-select form-select-lg text-secondary"
+                  data-selected="<%= @blood_requirement.country_code %>"
+                  required>
           </select>
         </div>
 
-
         <%= f.telephone_field :contact_number, class: "form-control", placeholder: "Phone Number", required: true %>
-        <%= f.date_field :required_date, class: "form-control", min: Date.today, required: true %>
+
+        <!-- Patient Name Field -->
+        <%= f.text_field :patient_name, class: "form-control", placeholder: "Patient Name", required: true %>
+
+        <%= f.datetime_local_field :required_date,
+                                   class: "form-control text-secondary",
+                                   min: Time.zone.now.strftime("%Y-%m-%dT%H:%M"),
+                                   value: @blood_requirement.required_date&.strftime("%Y-%m-%dT%H:%M"),
+                                   required: true %>
         <%= f.number_field :required_units, class: "form-control", placeholder: "Required Units", required: true %>
         <%= f.text_field :reason, class: "form-control", placeholder: "Reason", required: true %>
         <%= f.text_field :location, id: "searchInput1", class: "form-control", placeholder: "Location", autocomplete: "off", required: true %>
@@ -74,6 +83,7 @@
         <%= f.submit "Request available donors", class: "btn btn-danger px-4 mt-2 mt-md-0" %>
       </div>
     <% end %>
+
   </div>
 
 <!-- Request Available Donors Dialoguebox Structure (Mobile) -->

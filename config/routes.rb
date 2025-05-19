@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "donate",to: "donate_now#index"
   get "home", to: "home#index"
   root to: "home#index"
   get "home", to: "application#home"
@@ -8,6 +9,6 @@ Rails.application.routes.draw do
   devise_scope :user do
     devise_for :users, controllers: { registrations: "users/registrations" }
     get "register", to: "users/registrations#new"
-    resources :blood_requirements, only: [ :new, :create ]
+    resources :blood_requirements
   end
 end

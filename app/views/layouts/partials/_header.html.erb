@@ -10,12 +10,8 @@
     <div class="d-lg-none d-flex align-items-center gap-3">
       <!-- Profile Icon (SVG) -->
       <a href="profile.html" class="text-decoration-none">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-             class="bi bi-person-circle text-secondary" viewBox="0 0 16 16">
-          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-          <path fill-rule="evenodd"
-                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-        </svg>
+        <i class="bi bi-person-circle text-secondary profile-icon fs-2"></i>
+
       </a>
 
       <!-- Toggler Button -->
@@ -39,7 +35,12 @@
           </a>
           <ul class="dropdown-menu shadow-sm rounded-3 border border-light">
             <a href="<%= donors_path(anchor: 'find-donors') %>" class="dropdown-item fw-semibold py-2<%= ' text-danger' if current_page?(donors_path) %>">Find Donors</a>
-            <li><a class="dropdown-item fw-semibold py-2<%= ' text-danger' if request.path.include?('Donate Now') %>" href="#">Donate Now</a></li>
+            <li>
+              <a class="dropdown-item fw-semibold py-2<%= ' text-danger' if request.path == '/donate' %>" href="<%= donate_path %>">
+                Donate Now
+              </a>
+            </li>
+
           </ul>
         </li>
         <li class="nav-item">
@@ -64,10 +65,7 @@
         </button>
       </a>
       <a href="profile.html">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle mt-2 text-secondary" viewBox="0 0 16 16">
-          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-        </svg>
+        <i class="bi bi-person-circle text-secondary profile-icon fs-2"></i>
       </a>
     </div>
   </div>
@@ -87,10 +85,10 @@
           <a href="<%= about_path %>" class="nav-link fw-semibold mb-4<%= ' text-danger' if current_page?(about_path) %>">About us</a>
         </li>
         <li class="nav-item dropdown w-100">
-          <a href="#" class="nav-link dropdown-toggle fw-semibold mb-4 w-100 text-start<%= ' text-danger' if current_page?(donors_path) || request.path.include?('Donate Now') %>" id="emergencyDropdownMobile" role="button" data-bs-toggle="dropdown">
+          <a href="#" class="nav-link dropdown-toggle fw-semibold mb-2 w-100 text-start<%= ' text-danger' if current_page?(donors_path) || request.path.include?('Donate Now') %>" id="emergencyDropdownMobile" role="button" data-bs-toggle="dropdown">
             Emergency
           </a>
-          <ul class="dropdown-menu shadow-sm rounded-3 border border-light w-100" aria-labelledby="emergencyDropdownMobile">
+          <ul class="dropdown-menu shadow-sm rounded-bottom-5 border border-light " aria-labelledby="emergencyDropdownMobile">
             <li><a class="dropdown-item fw-semibold py-2<%= ' text-danger' if current_page?(donors_path) %>" href="<%= donors_path(anchor: 'find-donors') %>">Find Donors</a></li>
             <li><a class="dropdown-item fw-semibold py-2<%= ' text-danger' if request.path.include?('Donate Now') %>" href="#">Donate Now</a></li>
           </ul>
@@ -121,5 +119,3 @@
     </div>
   </div>
 </nav>
-
-<!--Navbar-->
