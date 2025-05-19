@@ -1,3 +1,5 @@
+<!-- Add this in your <head> if not present -->
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Background Section (Only visible on md and above) -->
 <div class="container-fluid bg-danger text-white d-none d-md-flex flex-column justify-content-center align-items-center" style="min-height: 35vh;">
   <div class="text-center w-100">
@@ -7,20 +9,20 @@
 </div>
 
 <!-- Unified Form Section -->
-<div class="container position-relative">
-  <div class="card p-4 shadow w-100 mx-auto" style="max-width: 650px; margin-top: -100px;">
-
+<div class="container">
+  <div class="card p-4 shadow w-100 mx-auto" style="max-width: 650px; margin-top: -100px; background: #fff;" id="donor-card">
     <!-- Heading on small screens -->
-    <div class="d-md-none text-center mb-3">
+    <div class="d-md-none text-center ">
       <h3>Register as a donor</h3>
       <p>Join us in making a difference by becoming a donor.</p>
     </div>
-    <p class="text-start mb-4 fw-bold">Register as a donor</p>
+    <p class="text-start mb-5 fw-bold d-none d-md-block">Register as a donor</p>
+
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :post, novalidate: true }) do |f| %>
       <!-- Name -->
-      <div class="mb-3 row">
-        <label class="col-3 col-form-label fw-semibold">Name</label>
-        <div class="col-9">
+      <div class="mb-3 row align-items-center">
+        <label class="col-12 col-md-3 col-form-label fw-semibold">Name</label>
+        <div class="col-12 col-md-9">
           <%= f.text_field :name, class: "form-control validate-me #{resource.errors[:name].any? ? 'is-invalid' : (resource.errors.any? ? 'is-valid' : '')}", placeholder: "Full name" %>
           <% if resource.errors[:name].any? %>
             <div class="invalid-feedback"><%= resource.errors[:name].first %></div>
@@ -60,6 +62,7 @@
           <% end %>
         </div>
       </div>
+
       <!-- Phone -->
       <div class="mb-3 row">
         <label class="col-md-3 col-form-label fw-semibold" for="phone">Phone Number</label>
@@ -93,8 +96,8 @@
                    id="searchInput"
                    placeholder="Enter or tap live location">
             <span class="input-group-text" id="get-location">
-          <i class="bi bi-crosshair2"></i>
-        </span>
+              <i class="bi bi-crosshair2"></i>
+            </span>
           </div>
           <% if resource.errors[:location].any? %>
             <div class="invalid-feedback"><%= resource.errors[:location].first %></div>
@@ -113,8 +116,15 @@
   </div>
 </div>
 
-<!-- Optional Styles -->
+<!-- Styles -->
 <style>
+    /* Reset margin-top on card for mobile */
+    @media (max-width: 767.98px) {
+        #donor-card {
+            margin-top: 100px !important;
+        }
+    }
+
     .iti {
         width: 100% !important;
     }

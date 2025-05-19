@@ -1,0 +1,45 @@
+<% @blood_requirements.each do |requirement| %>
+  <div class="container " style="margin-top: 100px;">
+    <div class="card shadow rounded-3 p-3" style="background-color: white; color: black;">
+      <div class="card-body">
+        <div class="row">
+          <!-- Left column -->
+          <div class="col-md-3">
+            <p><strong>Blood group:</strong> <%= requirement.user&.blood_group || "N/A" %></p>
+            <p><strong>Date:</strong> <%= requirement.required_date&.strftime("%Y-%m-%d %I:%M %p") %></p>
+            <p><strong>No of units:</strong> <%= requirement.required_units %></p>
+            <p><strong>Contact:</strong> <%= requirement.contact_number %></p>
+          </div>
+
+          <!-- Right column -->
+          <div class="col-md-9">
+            <p><strong>Hospital name:</strong> <%= requirement.location %></p>
+            <p><strong>Patient name:</strong> <%= requirement.patient_name %></p>
+            <p><strong>Reason:</strong> <%= requirement.reason %></p>
+          </div>
+
+          <!-- Bottom row: Edit/Delete left, Share/Posted right -->
+          <div class="d-flex justify-content-between align-items-end mt-1 flex-wrap">
+            <div>
+              <%= link_to "Edit", edit_blood_requirement_path(requirement), class: "btn btn-outline-danger px-3 py-2 fw-semibold me-3" %>
+              <%= link_to "Delete", blood_requirement_path(requirement), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger px-3 py-2 fw-semibold" %>
+
+            </div>
+
+            <div class="text-center">
+              <div class="mb-2">
+                <a href="#" class="text-dark me-2"><i class="bi bi-twitter"></i></a>
+                <a href="#" class="text-dark me-2"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-dark"><i class="bi bi-linkedin"></i></a>
+              </div>
+              <p class="mb-0 small text-muted">
+                Posted by <strong><%= requirement.user&.name || "Unknown" %></strong>,
+                <%= time_ago_in_words(requirement.created_at) %> ago
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

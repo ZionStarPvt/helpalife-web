@@ -22,6 +22,7 @@ class BloodRequirementsController < ApplicationController
 
   def blood_requirement_params
     params.require(:blood_requirement).permit(
+    :patient_name,
       :required_date,
       :required_units,
       :country_code,
